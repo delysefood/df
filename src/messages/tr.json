@@ -1,0 +1,139 @@
+{
+  "Auth": {
+    "signInTitle": "Giriş Yap",
+    "signUpTitle": "Hesap Oluştur",
+    "name": "İsim",
+    "email": "E-posta",
+    "password": "Şifre",
+    "signInBtn": "Giriş Yap",
+    "signUpBtn": "Kayıt Ol",
+    "invalidError": "Geçersiz e-posta veya şifre",
+    "genericError": "Bir şeyler ters gitti"
+  },
+  "HomePage": {
+    "subtitle": "Mutfak İstisnası",
+    "title": "Delyse Food'u Keşfedin",
+    "description": "Şehrin kalbinde yer alan Delyse Food, bir restorandan çok daha fazlasıdır. Modern gastronomiye adanmış bir sığınaktır.",
+    "topListTitle": "En İyiler",
+    "topListSubtitle": "Özel Seçimlerimiz",
+    "featuredTitle": "Şehrin En İyi *Patates Kızartması*",
+    "featuredDesc": "Russet patateslerimiz özenle seçilir, elle kesilir ve dışı çıtır, içi ağızda eriyen bir doku için üç kez pişirilir.",
+    "featuredCTA": "Sırlarımızı Keşfedin",
+    "servicesTitle": "Premium Servislerimiz",
+    "dishes": {
+      "noodles": {
+        "name": "Gurme Noodle",
+        "desc": "Sevgi ve premium kurutulmuş karidesle hazırlanan el yapımı erişteler."
+      },
+      "ramen": {
+        "name": "Spicy Ramen Luxe",
+        "desc": "24 saat kaynatılmış baharatlı et suyu, taze deniz ürünleri ve eriyen domuz eti."
+      },
+      "soup": {
+        "name": "Prawn Spicy Soup",
+        "desc": "Kral karideslerle Tayland lezzetlerinin patlaması."
+      }
+    },
+    "services": {
+      "reservation": "Online Rezervasyon",
+      "catering": "Catering Hizmeti",
+      "member": "Üye Alanı",
+      "delivery": "Hızlı Teslimat"
+    }
+  },
+  "Navbar": {
+    "home": "Anasayfa",
+    "menu": "Menü",
+    "reservation": "Rezervasyon",
+    "contact": "İletişim",
+    "signin": "Giriş Yap",
+    "dashboard": "Panel"
+  },
+  "Hero": {
+    "title": "Gastronomi Sanatı",
+    "subtitle": "Prestijli bir ortamda istisnai lezzetlerin tadını çıkarın",
+    "cta": "Masa Rezerve Et"
+  },
+  "Footer": {
+    "description": "Duyularınızın hizmetinde mutfak mükemmelliği. Lüks bir ortamda lezzet yolculuğuna davet.",
+    "quickLinks": "Hızlı Bağlantılar",
+    "home": "Anasayfa",
+    "menu": "Menü",
+    "reservation": "Rezervasyon",
+    "contact": "İletişim & Erişim",
+    "newsletter": "Bülten"
+  },
+  "Menu": {
+    "title": "Menü",
+    "subtitle": "Lezzetlerimizi keşfedin",
+    "loading": "Menü yükleniyor...",
+    "pageTitle": "*Mükemmelliği Tadın*",
+    "pageDescription": "Michelin yıldızlı şeflerimiz tarafından küratörlüğü yapılmış, tutku ve mevsimlik ürünlerle hazırlanmış bir menü.",
+    "starters": "Başlangıçlar",
+    "mains": "Ana Yemekler",
+    "desserts": "Tatlılar",
+    "drinks": "İçecekler"
+  },
+  "Reservation": {
+    "title": "Masa Rezerve Et",
+    "subtitle": "Olağanüstü bir masa sizi bekliyor",
+    "date": "Ziyaret tarihiniz",
+    "time": "Ziyaret saatiniz",
+    "guests": "Konuk sayısı",
+    "person": "Kişi",
+    "persons": "Kişi",
+    "name": "İsminiz",
+    "message": "Özel istekler",
+    "confirmButton": "Rezervasyonu Onayla",
+    "pageTitle": "Bir *Masa* Ayırtın",
+    "pageDescription": "Olağanüstü bir ortamda zamansız bir gastronomik yolculuk deneyimleyin.",
+    "namePlaceholder": "Örn: Ahmet Yılmaz",
+    "messagePlaceholder": "Detaylar (doğum günü, alerjiler...)",
+    "callUs": "Bizi Arayın",
+    "emailLabel": "E-posta",
+    "locationLabel": "Konum",
+    "locationText": "Gurme Caddesi, Paris"
+  },
+  "Cart": {
+    "title": "Sepetiniz",
+    "emptyTitle": "Sepetiniz boş",
+    "emptySubtitle": "Gastronomik seçimlerimizle kendinizi şımartın",
+    "discoverMenu": "Menüyü Keşfedin",
+    "remove": "Kaldır",
+    "total": "Toplam",
+    "checkoutBtn": "Ödeme Yap",
+    "processing": "İşleniyor...",
+    "successMessage": "Sipariş başarıyla verildi!",
+    "errorMessage": "Sipariş verilirken bir hata oluştu."
+  },
+  "Admin": {
+    "title": "Yönetim",
+    "overview": "Genel Bakış",
+    "menu": "Menü Yönetimi",
+    "reservations": "Rezervasyonlar",
+    "orders": "Siparişler",
+    "config": "Yapılandırma",
+    "logout": "Çıkış",
+    "loading": "Admin yükleniyor..."
+  },
+  "Contact": {
+    "pageSubtitle": "Bize Ulaşın",
+    "pageTitle": "Hizmetinizdeyiz",
+    "pageDescription": "Bir soru? Özel bir etkinlik? Ekibimiz sizi desteklemek için burada.",
+    "addressTitle": "Adresimiz",
+    "phoneTitle": "Telefon",
+    "emailTitle": "E-posta",
+    "hoursTitle": "Açılış Saatleri",
+    "mondayFriday": "Pzt - Cum",
+    "saturdaySunday": "Cmt - Paz",
+    "nameLabel": "Tam İsim",
+    "emailLabel": "E-posta",
+    "subjectLabel": "Konu",
+    "messageLabel": "Mesajınız",
+    "namePlaceholder": "Ahmet Yılmaz",
+    "subjectPlaceholder": "Örn: Özel etkinlik, Öneri...",
+    "messagePlaceholder": "Bize her şeyi anlatın...",
+    "sendButton": "Mesaj Gönder",
+    "everyDay": "Her gün"
+  }
+}

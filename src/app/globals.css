@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+:root {
+  --background: #FBFAF5; /* Ultra soft ivory like Barco backdrop */
+  --foreground: #1A1A1A; /* Logo Noir */
+  --primary: #FF9F0D;    /* Logo Orange/Gold */
+  --primary-foreground: #FFFFFF;
+  --accent: #FF9F0D;
+  --card: #FFFFFF;
+  --card-foreground: #1A1A1A;
+  --border: rgba(26, 26, 26, 0.06);
+  --input: rgba(26, 26, 26, 0.06);
+  --ring: #FF9F0D;
+}
+
+.dark {
+  --background: #0F172A; /* Deep Indigo-Black premium dark from Barco style */
+  --foreground: #F8FAFC;
+  --primary: #FF9F0D;
+  --primary-foreground: #1A1A1A;
+  --accent: #FF9F0D;
+  --card: #1E293B;
+  --card-foreground: #F8FAFC;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: #FF9F0D;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-gold: #FF9F0D;
+  --color-noir: #1A1A1A;
+  --color-blanc: #FFFFFF;
+  --color-ivoire: #FBFAF5;
+  --color-card: var(--card);
+  --color-border: var(--border);
+  
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  
+  --radius-xl: 2.5rem;    /* Generous rounding like Barco */
+  --radius-lg: 1.75rem;
+  --radius-md: 1.25rem;
+  --radius-sm: 0.75rem;
+
+  --animate-fade-in: fade-in 0.6s ease-out;
+  --animate-slide-up: slide-up 0.8s ease-out;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+* {
+  border-color: var(--border);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  @apply tracking-tight font-black;
+}
+
+/* Premium Component Styling Inspired by Barco */
+.glass {
+  @apply bg-card/60 backdrop-blur-2xl border border-white/20 dark:border-white/5;
+}
+
+.glass-card {
+  @apply bg-card backdrop-blur-xl border border-border shadow-[0_20px_50px_rgba(0,0,0,0.04)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.2)];
+}
+
+.plate-shadow {
+  filter: drop-shadow(0 30px 40px rgba(0,0,0,0.12)) drop-shadow(0 15px 15px rgba(0,0,0,0.08));
+}
+
+/* Custom Scrollbar - Minimalist */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 20px;
+}
+
+

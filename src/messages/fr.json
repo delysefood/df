@@ -1,0 +1,139 @@
+{
+  "Auth": {
+    "signInTitle": "Connexion",
+    "signUpTitle": "Créer un compte",
+    "name": "Nom",
+    "email": "Email",
+    "password": "Mot de passe",
+    "signInBtn": "Se connecter",
+    "signUpBtn": "S'inscrire",
+    "invalidError": "Email ou mot de passe invalide",
+    "genericError": "Une erreur est survenue"
+  },
+  "HomePage": {
+    "subtitle": "Exception Culinaire",
+    "title": "Découvrez Delyse Food",
+    "description": "Situé au cœur de la ville, Delyse Food est bien plus qu'un simple restaurant. C'est un sanctuaire dédié à la gastronomie moderne.",
+    "topListTitle": "Top List",
+    "topListSubtitle": "Notre Sélection Signature",
+    "featuredTitle": "Les Meilleures Frites *De La Ville*",
+    "featuredDesc": "Nos pommes de terre Russet sont sélectionnées avec soin, coupées à la main et cuites trois fois pour une texture croustillante à l'extérieur et fondante à l'intérieur.",
+    "featuredCTA": "Découvrir Nos Secrets",
+    "servicesTitle": "Nos Services Premium",
+    "dishes": {
+      "noodles": {
+        "name": "Gourmet Noodles",
+        "desc": "Nouilles artisanales préparées avec amour et crevettes séchées premium."
+      },
+      "ramen": {
+        "name": "Spicy Ramen Luxe",
+        "desc": "Bouillon épicé mijoté 24h, fruits de mer frais et porc fondant."
+      },
+      "soup": {
+        "name": "Prawn Spicy Soup",
+        "desc": "Une explosion de saveurs thaï avec des crevettes royales."
+      }
+    },
+    "services": {
+      "reservation": "Réservation En Ligne",
+      "catering": "Service Traiteur",
+      "member": "Espace Membre",
+      "delivery": "Livraison Rapide"
+    }
+  },
+  "Navbar": {
+    "home": "Accueil",
+    "menu": "Menu",
+    "reservation": "Réservation",
+    "contact": "Contact",
+    "signin": "Connexion",
+    "dashboard": "Tableau de Bord"
+  },
+  "Hero": {
+    "title": "L'Art de la Gastronomie",
+    "subtitle": "Savourez l'exception dans un cadre prestigieux",
+    "cta": "Réserver une table"
+  },
+  "Footer": {
+    "description": "L'excellence culinaire au service de vos sens. Une invitation au voyage gustatif dans un écrin de luxe.",
+    "quickLinks": "Liens Rapides",
+    "home": "Accueil",
+    "menu": "Menu",
+    "reservation": "Réservation",
+    "contact": "Contact & Accès",
+    "newsletter": "Newsletter"
+  },
+  "Menu": {
+    "title": "La Carte",
+    "subtitle": "Découvrez nos saveurs",
+    "loading": "Chargement de la Carte...",
+    "pageTitle": "Savourez *l'Excellence*",
+    "pageDescription": "Une carte signée par nos chefs étoilés, élaborée avec passion et produits de saison.",
+    "starters": "Entrées",
+    "mains": "Plats",
+    "desserts": "Desserts",
+    "drinks": "Boissons"
+  },
+  "Reservation": {
+    "title": "Réserver une Table",
+    "subtitle": "Une table d'exception vous attend",
+    "date": "Date de votre visite",
+    "time": "Heure de votre visite",
+    "guests": "Nombre de convives",
+    "person": "Personne",
+    "persons": "Personnes",
+    "name": "Votre nom",
+    "message": "Demandes particulières",
+    "confirmButton": "Confirmer la Réservation",
+    "pageTitle": "Réserver *Une Table*",
+    "pageDescription": "Vivez une expérience gastronomique hors du temps dans un cadre d'exception.",
+    "namePlaceholder": "Ex: Jean Dupont",
+    "messagePlaceholder": "Précisions (anniversaire, allergies...)",
+    "callUs": "Appelez-nous",
+    "emailLabel": "Email",
+    "locationLabel": "Localisation",
+    "locationText": "Avenue Gourmet, Paris"
+  },
+  "Cart": {
+    "title": "Votre Panier",
+    "emptyTitle": "Votre panier est vide",
+    "emptySubtitle": "Laissez-vous tenter par notre sélection gastronomique",
+    "discoverMenu": "Découvrir la Carte",
+    "remove": "Retirer",
+    "total": "Total",
+    "checkoutBtn": "Commander",
+    "processing": "Traitement en cours...",
+    "successMessage": "Commande passée avec succès !",
+    "errorMessage": "Une erreur est survenue lors de la commande."
+  },
+  "Admin": {
+    "title": "Administration",
+    "overview": "Aperçu",
+    "menu": "Gestion Menu",
+    "reservations": "Réservations",
+    "orders": "Commandes",
+    "config": "Configuration",
+    "logout": "Quitter",
+    "loading": "Chargement Admin..."
+  },
+  "Contact": {
+    "pageSubtitle": "Contactez-nous",
+    "pageTitle": "À Votre *ÉCOUTE*",
+    "pageDescription": "Une question ? Un événement spécial ? Notre équipe est là pour vous accompagner.",
+    "addressTitle": "Notre Adresse",
+    "phoneTitle": "Téléphone",
+    "emailTitle": "Email",
+    "hoursTitle": "Horaires d'ouverture",
+    "mondayFriday": "Lun - Ven",
+    "saturdaySunday": "Sam - Dim",
+    "nameLabel": "Nom Complet",
+    "emailLabel": "Email",
+    "subjectLabel": "Objet",
+    "messageLabel": "Votre Message",
+    "namePlaceholder": "Jean Dupont",
+    "subjectPlaceholder": "Ex: Privatisation, Suggestion...",
+    "messagePlaceholder": "Dites-nous tout...",
+    "sendButton": "Envoyer le message",
+    "everyDay": "Chaque jour"
+  }
+}

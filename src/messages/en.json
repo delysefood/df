@@ -1,0 +1,139 @@
+{
+  "Auth": {
+    "signInTitle": "Sign In",
+    "signUpTitle": "Create an account",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "signInBtn": "Sign In",
+    "signUpBtn": "Sign Up",
+    "invalidError": "Invalid email or password",
+    "genericError": "Something went wrong"
+  },
+  "HomePage": {
+    "subtitle": "Culinary Exception",
+    "title": "Discover Delyse Food",
+    "description": "Located in the heart of the city, Delyse Food is much more than just a restaurant. It is a sanctuary dedicated to modern gastronomy.",
+    "topListTitle": "Top List",
+    "topListSubtitle": "Our Signature Selection",
+    "featuredTitle": "The Best Fries *In The City*",
+    "featuredDesc": "Our Russet potatoes are carefully selected, hand-cut and cooked three times for a texture that's crispy on the outside and melt-in-the-mouth inside.",
+    "featuredCTA": "Discover Our Secrets",
+    "servicesTitle": "Our Premium Services",
+    "dishes": {
+      "noodles": {
+        "name": "Gourmet Noodles",
+        "desc": "Handcrafted noodles prepared with love and premium dried shrimp."
+      },
+      "ramen": {
+        "name": "Spicy Ramen Luxe",
+        "desc": "Spicy broth simmered for 24 hours, fresh seafood and melting pork."
+      },
+      "soup": {
+        "name": "Prawn Spicy Soup",
+        "desc": "An explosion of Thai flavors with king prawns."
+      }
+    },
+    "services": {
+      "reservation": "Online Reservation",
+      "catering": "Catering Service",
+      "member": "Member Area",
+      "delivery": "Fast Delivery"
+    }
+  },
+  "Navbar": {
+    "home": "Home",
+    "menu": "Menu",
+    "reservation": "Reservation",
+    "contact": "Contact",
+    "signin": "Sign In",
+    "dashboard": "Dashboard"
+  },
+  "Hero": {
+    "title": "The Art of Gastronomy",
+    "subtitle": "Savor the exceptional in a prestigious setting",
+    "cta": "Book a table"
+  },
+  "Footer": {
+    "description": "Culinary excellence at the service of your senses. An invitation to a gustatory journey in a luxury setting.",
+    "quickLinks": "Quick Links",
+    "home": "Home",
+    "menu": "Menu",
+    "reservation": "Reservation",
+    "contact": "Contact & Access",
+    "newsletter": "Newsletter"
+  },
+  "Menu": {
+    "title": "The Menu",
+    "subtitle": "Discover our flavors",
+    "loading": "Loading Menu...",
+    "pageTitle": "*Savor Excellence*",
+    "pageDescription": "A menu curated by our Michelin-starred chefs, crafted with passion and seasonal products.",
+    "starters": "Starters",
+    "mains": "Main Courses",
+    "desserts": "Desserts",
+    "drinks": "Drinks"
+  },
+  "Reservation": {
+    "title": "Book a Table",
+    "subtitle": "An exceptional table awaits you",
+    "date": "Date of your visit",
+    "time": "Time of your visit",
+    "guests": "Number of guests",
+    "person": "Person",
+    "persons": "Persons",
+    "name": "Your name",
+    "message": "Particular requests",
+    "confirmButton": "Confirm Reservation",
+    "pageTitle": "Book *A Table*",
+    "pageDescription": "Experience a timeless gastronomic journey in an exceptional setting.",
+    "namePlaceholder": "Ex: John Doe",
+    "messagePlaceholder": "Any details (birthday, allergies...)",
+    "callUs": "Call Us",
+    "emailLabel": "Email",
+    "locationLabel": "Location",
+    "locationText": "Gourmet Avenue, Paris"
+  },
+  "Cart": {
+    "title": "Your Cart",
+    "emptyTitle": "Your cart is empty",
+    "emptySubtitle": "Let yourself be tempted by our gastronomic selection",
+    "discoverMenu": "Discover the Menu",
+    "remove": "Remove",
+    "total": "Total",
+    "checkoutBtn": "Checkout",
+    "processing": "Processing...",
+    "successMessage": "Order placed successfully!",
+    "errorMessage": "An error occurred while placing your order."
+  },
+  "Admin": {
+    "title": "Administration",
+    "overview": "Overview",
+    "menu": "Menu Management",
+    "reservations": "Reservations",
+    "orders": "Orders",
+    "config": "Configuration",
+    "logout": "Exit",
+    "loading": "Loading Admin..."
+  },
+  "Contact": {
+    "pageSubtitle": "Contact Us",
+    "pageTitle": "At Your *SERVICE*",
+    "pageDescription": "A question? A special event? Our team is here to support you.",
+    "addressTitle": "Our Address",
+    "phoneTitle": "Phone",
+    "emailTitle": "Email",
+    "hoursTitle": "Opening Hours",
+    "mondayFriday": "Mon - Fri",
+    "saturdaySunday": "Sat - Sun",
+    "nameLabel": "Full Name",
+    "emailLabel": "Email",
+    "subjectLabel": "Subject",
+    "messageLabel": "Your Message",
+    "namePlaceholder": "John Doe",
+    "subjectPlaceholder": "Ex: Privatization, Suggestion...",
+    "messagePlaceholder": "Tell us everything...",
+    "sendButton": "Send Message",
+    "everyDay": "Every day"
+  }
+}

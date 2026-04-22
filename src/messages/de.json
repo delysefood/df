@@ -1,0 +1,139 @@
+{
+  "Auth": {
+    "signInTitle": "Anmelden",
+    "signUpTitle": "Konto erstellen",
+    "name": "Name",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "signInBtn": "Anmelden",
+    "signUpBtn": "Registrieren",
+    "invalidError": "Ungültige E-Mail oder Passwort",
+    "genericError": "Etwas ist schief gelaufen"
+  },
+  "HomePage": {
+    "subtitle": "Kulinarische Ausnahme",
+    "title": "Entdecken Sie Delyse Food",
+    "description": "Im Herzen der Stadt gelegen, ist Delyse Food viel mehr als nur ein Restaurant. Es ist ein Heiligtum, das der modernen Gastronomie gewidmet ist.",
+    "topListTitle": "Top-Liste",
+    "topListSubtitle": "Unsere Signature-Auswahl",
+    "featuredTitle": "Die besten Pommes *der Stadt*",
+    "featuredDesc": "Unsere Russet-Kartoffeln werden sorgfältig ausgewählt, von Hand geschnitten und dreimal gekocht für eine Textur, die außen knusprig und innen zartschmelzend ist.",
+    "featuredCTA": "Unsere Geheimnisse entdecken",
+    "servicesTitle": "Unsere Premium-Services",
+    "dishes": {
+      "noodles": {
+        "name": "Gourmet-Nudeln",
+        "desc": "Handgemachte Nudeln mit Liebe und erstklassigen getrockneten Garnelen zubereitet."
+      },
+      "ramen": {
+        "name": "Spicy Ramen Luxe",
+        "desc": "24 Stunden gereifte scharfe Brühe, frische Meeresfrüchte und zartes Schweinefleisch."
+      },
+      "soup": {
+        "name": "Prawn Spicy Soup",
+        "desc": "Eine Explosion thailändischer Aromen mit Riesengarnelen."
+      }
+    },
+    "services": {
+      "reservation": "Online-Reservierung",
+      "catering": "Catering-Service",
+      "member": "Mitgliederbereich",
+      "delivery": "Schnelle Lieferung"
+    }
+  },
+  "Navbar": {
+    "home": "Startseite",
+    "menu": "Speisekarte",
+    "reservation": "Reservierung",
+    "contact": "Kontakt",
+    "signin": "Anmelden",
+    "dashboard": "Dashboard"
+  },
+  "Hero": {
+    "title": "Die Kunst der Gastronomie",
+    "subtitle": "Genießen Sie das Außergewöhnliche in prestigeträchtiger Umgebung",
+    "cta": "Tisch reservieren"
+  },
+  "Footer": {
+    "description": "Kulinarische Exzellenz im Dienste Ihrer Sinne. Eine Einladung zu einer Geschmacksreise in luxuriösem Ambiente.",
+    "quickLinks": "Schnelllinks",
+    "home": "Startseite",
+    "menu": "Speisekarte",
+    "reservation": "Reservierung",
+    "contact": "Kontakt & Anfahrt",
+    "newsletter": "Newsletter"
+  },
+  "Menu": {
+    "title": "Die Speisekarte",
+    "subtitle": "Entdecken Sie unsere Aromen",
+    "loading": "Menü wird geladen...",
+    "pageTitle": "*Exzellenz genießen*",
+    "pageDescription": "Eine von unseren Sterneköchen kuratierte Speisekarte, mit Leidenschaft und saisonalen Produkten kreiert.",
+    "starters": "Vorspeisen",
+    "mains": "Hauptgerichte",
+    "desserts": "Desserts",
+    "drinks": "Getränke"
+  },
+  "Reservation": {
+    "title": "Tisch reservieren",
+    "subtitle": "Ein außergewöhnlicher Tisch erwartet Sie",
+    "date": "Datum Ihres Besuchs",
+    "time": "Uhrzeit Ihres Besuchs",
+    "guests": "Anzahl der Gäste",
+    "person": "Person",
+    "persons": "Personen",
+    "name": "Ihr Name",
+    "message": "Besondere Wünsche",
+    "confirmButton": "Reservierung bestätigen",
+    "pageTitle": "Einen *Tisch* buchen",
+    "pageDescription": "Erleben Sie eine zeitlose gastronomische Reise in einem außergewöhnlichen Rahmen.",
+    "namePlaceholder": "Z.B. Max Mustermann",
+    "messagePlaceholder": "Details (Geburtstag, Allergien...)",
+    "callUs": "Rufen Sie uns an",
+    "emailLabel": "E-Mail",
+    "locationLabel": "Standort",
+    "locationText": "Gourmet-Allee, Paris"
+  },
+  "Cart": {
+    "title": "Ihr Warenkorb",
+    "emptyTitle": "Ihr Warenkorb ist leer",
+    "emptySubtitle": "Lassen Sie sich von unserer gastronomischen Auswahl verführen",
+    "discoverMenu": "Speisekarte entdecken",
+    "remove": "Entfernen",
+    "total": "Gesamt",
+    "checkoutBtn": "Bezahlen",
+    "processing": "Verarbeitung...",
+    "successMessage": "Bestellung erfolgreich aufgegeben!",
+    "errorMessage": "Fehler beim Aufgeben der Bestellung."
+  },
+  "Admin": {
+    "title": "Verwaltung",
+    "overview": "Übersicht",
+    "menu": "Menü-Verwaltung",
+    "reservations": "Reservierungen",
+    "orders": "Bestellungen",
+    "config": "Konfiguration",
+    "logout": "Abmelden",
+    "loading": "Admin wird geladen..."
+  },
+  "Contact": {
+    "pageSubtitle": "Kontaktieren Sie uns",
+    "pageTitle": "Zu Ihren *Diensten*",
+    "pageDescription": "Eine Frage? Ein besonderes Event? Unser Team ist für Sie da.",
+    "addressTitle": "Unsere Adresse",
+    "phoneTitle": "Telefon",
+    "emailTitle": "E-Mail",
+    "hoursTitle": "Öffnungszeiten",
+    "mondayFriday": "Mo - Fr",
+    "saturdaySunday": "Sa - So",
+    "nameLabel": "Vollständiger Name",
+    "emailLabel": "E-Mail",
+    "subjectLabel": "Betreff",
+    "messageLabel": "Ihre Nachricht",
+    "namePlaceholder": "Max Mustermann",
+    "subjectPlaceholder": "Z.B. Privatisierung, Vorschlag...",
+    "messagePlaceholder": "Erzählen Sie uns alles...",
+    "sendButton": "Nachricht senden",
+    "everyDay": "Jeden Tag"
+  }
+}

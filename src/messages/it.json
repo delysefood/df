@@ -1,0 +1,131 @@
+{
+  "Auth": {
+    "signInTitle": "Accedi",
+    "signUpTitle": "Crea un account",
+    "name": "Nome",
+    "email": "Email",
+    "password": "Password",
+    "signInBtn": "Accedi",
+    "signUpBtn": "Registrati",
+    "invalidError": "Email o password non validi",
+    "genericError": "Qualcosa è andato storto"
+  },
+  "HomePage": {
+    "subtitle": "Eccellenza Culinaria",
+    "title": "Scopri Delyse Food",
+    "description": "Situato nel cuore della città, Delyse Food è molto più di un semplice restaurante. È un santuario dedicato alla gastronomia moderna.",
+    "topListTitle": "Top List",
+    "topListSubtitle": "La Nostra Selezione Signature",
+    "featuredTitle": "Le Migliori Patatine *Della Città*",
+    "featuredDesc": "Le nostre patate Russet sono selezionate con cura, tagliate a mano e cotte tre volte per una consistenza croccante all'esterno e fondente all'interno.",
+    "featuredCTA": "Scopri i Nostri Segreti",
+    "servicesTitle": "I Nostri Servizi Premium",
+    "dishes": {
+      "noodles": {
+        "name": "Noodles Gourmet",
+        "desc": "Spaghetti artigianali preparati con amore e gamberetti secchi di prima qualità."
+      },
+      "ramen": {
+        "name": "Spicy Ramen Luxe",
+        "desc": "Brodo piccante cotto a fuoco lento per 24 ore, frutti di mare freschi e maiale fondente."
+      },
+      "soup": {
+        "name": "Zuppa di Gamberi Piccante",
+        "desc": "Un'esplosione di sapori tailandesi con gamberi reali."
+      }
+    },
+    "services": {
+      "reservation": "Prenotazione Online",
+      "catering": "Servizio Catering",
+      "member": "Area Soci",
+      "delivery": "Consegna Rapida"
+    }
+  },
+  "Navbar": {
+    "home": "Home",
+    "menu": "Menu",
+    "reservation": "Prenotazione",
+    "contact": "Contatti",
+    "signin": "Accedi",
+    "dashboard": "Dashboard"
+  },
+  "Contact": {
+    "pageSubtitle": "Contattaci",
+    "pageTitle": "Al Vostro *SERVIZIO*",
+    "pageDescription": "Una domanda? Un evento speciale? Il nostro team è qui per supportarvi.",
+    "addressTitle": "Il Nostro Indirizzo",
+    "phoneTitle": "Telefono",
+    "emailTitle": "Email",
+    "hoursTitle": "Orari di Apertura",
+    "mondayFriday": "Lun - Ven",
+    "saturdaySunday": "Sab - Dom",
+    "nameLabel": "Nome Completo",
+    "emailLabel": "Email",
+    "subjectLabel": "Oggetto",
+    "messageLabel": "Il Vostro Messaggio",
+    "namePlaceholder": "Mario Rossi",
+    "subjectPlaceholder": "Es: Privatizzazione, Suggerimento...",
+    "messagePlaceholder": "Diteci tutto...",
+    "sendButton": "Invia Messaggio",
+    "everyDay": "Ogni giorno"
+  },
+  "Hero": {
+    "title": "L'Arte della Gastronomia",
+    "subtitle": "Assapora l'eccezionale in un contesto prestigioso",
+    "cta": "Prenota un tavolo"
+  },
+  "Footer": {
+    "description": "Eccellenza culinaria al servizio dei vostri sensi. Un invito a un viaggio gustativo in una cornice di lusso.",
+    "quickLinks": "Link Rapidi",
+    "home": "Home",
+    "menu": "Menu",
+    "reservation": "Prenotazione",
+    "contact": "Contatti e Accesso",
+    "newsletter": "Newsletter"
+  },
+  "Menu": {
+    "title": "Il Menu",
+    "subtitle": "Scoprite i nostri sapori",
+    "loading": "Caricamento in corso...",
+    "pageTitle": "Assapora l'*Eccellenza*",
+    "pageDescription": "Un menu curato dai nostri chef stellati, creato con passione et prodotti di stagione.",
+    "starters": "Antipasti",
+    "mains": "Secondi",
+    "desserts": "Dolci",
+    "drinks": "Bevande"
+  },
+  "Reservation": {
+    "title": "Prenotare un Tavolo",
+    "subtitle": "Un tavolo eccezionale vi aspetta",
+    "date": "Data della vostra visita",
+    "time": "Orario della vostra visita",
+    "guests": "Numero di ospiti",
+    "person": "Persona",
+    "persons": "Persone",
+    "name": "Il vostro nome",
+    "message": "Richieste speciali",
+    "confirmButton": "Conferma Prenotazione"
+  },
+  "Cart": {
+    "title": "Il Tuo Carrello",
+    "emptyTitle": "Il tuo carrello è vuoto",
+    "emptySubtitle": "Lasciati tentare dalla nostra selezione gastronomica",
+    "discoverMenu": "Scopri il Menu",
+    "remove": "Rimuovi",
+    "total": "Totale",
+    "checkoutBtn": "Ordina",
+    "processing": "Elaborazione...",
+    "successMessage": "Ordine effettuato con successo!",
+    "errorMessage": "Si è verificato un errore durante l'ordine."
+  },
+  "Admin": {
+    "title": "Amministrazione",
+    "overview": "Panoramica",
+    "menu": "Gestione Menu",
+    "reservations": "Prenotazioni",
+    "orders": "Ordini",
+    "config": "Configurazione",
+    "logout": "Uscita",
+    "loading": "Caricamento Admin..."
+  }
+}

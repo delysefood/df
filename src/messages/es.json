@@ -1,0 +1,131 @@
+{
+  "Auth": {
+    "signInTitle": "Iniciar Sesión",
+    "signUpTitle": "Crear una cuenta",
+    "name": "Nombre",
+    "email": "Email",
+    "password": "Contraseña",
+    "signInBtn": "Iniciar Sesión",
+    "signUpBtn": "Registrarse",
+    "invalidError": "Email o contraseña inválidos",
+    "genericError": "Algo salió mal"
+  },
+  "HomePage": {
+    "subtitle": "Excepción Culinaria",
+    "title": "Descubra Delyse Food",
+    "description": "Situado en el corazón de la ciudad, Delyse Food es mucho más que un simple restaurante. Es un santuario dedicado a la gastronomía moderna.",
+    "topListTitle": "Top List",
+    "topListSubtitle": "Nuestra Selección Distintiva",
+    "featuredTitle": "Las Meilleures Patatas *De La Ciudad*",
+    "featuredDesc": "Nuestras patatas Russet son seleccionadas con cuidado, cortadas a mano y cocinadas tres veces para obtener una textura crujiente por fuera y fundente por dentro.",
+    "featuredCTA": "Descubrir Nuestros Secretos",
+    "servicesTitle": "Nuestros Servicios Premium",
+    "dishes": {
+      "noodles": {
+        "name": "Noodles Gourmet",
+        "desc": "Fideos artesanales preparados con amor y camarones secos de primera calidad."
+      },
+      "ramen": {
+        "name": "Ramen Picante de Lujo",
+        "desc": "Caldo picante cocinado a fuego lento durante 24 horas, mariscos frescos y cerdo tierno."
+      },
+      "soup": {
+        "name": "Sopa de Gambas Picante",
+        "desc": "Una explosión de sabores tailandeses con gambas reales."
+      }
+    },
+    "services": {
+      "reservation": "Reserva en Línea",
+      "catering": "Servicio de Catering",
+      "member": "Área de Miembros",
+      "delivery": "Entrega Rápida"
+    }
+  },
+  "Navbar": {
+    "home": "Inicio",
+    "menu": "Menú",
+    "reservation": "Reserva",
+    "contact": "Contacto",
+    "signin": "Acceder",
+    "dashboard": "Panel Admin"
+  },
+  "Contact": {
+    "pageSubtitle": "Contáctenos",
+    "pageTitle": "A su *SERVICIO*",
+    "pageDescription": "¿Una pregunta? ¿Un evento especial? Nuestro equipo está aquí para apoyarle.",
+    "addressTitle": "Nuestra Dirección",
+    "phoneTitle": "Teléfono",
+    "emailTitle": "Correo electrónico",
+    "hoursTitle": "Horario de apertura",
+    "mondayFriday": "Lun - Vie",
+    "saturdaySunday": "Sáb - Dom",
+    "nameLabel": "Nombre Completo",
+    "emailLabel": "Correo electrónico",
+    "subjectLabel": "Asunto",
+    "messageLabel": "Su Mensaje",
+    "namePlaceholder": "Juan Pérez",
+    "subjectPlaceholder": "Ej: Privatización, Sugerencia...",
+    "messagePlaceholder": "Cuéntenos todo...",
+    "sendButton": "Enviar mensaje",
+    "everyDay": "Todos los días"
+  },
+  "Hero": {
+    "title": "El Arte de la Gastronomía",
+    "subtitle": "Disfrute de lo excepcional en un entorno prestigioso",
+    "cta": "Reservar una mesa"
+  },
+  "Footer": {
+    "description": "Excelencia culinaria al servicio de sus sentidos. Una invitación a un viaje gustativo en un entorno de lujo.",
+    "quickLinks": "Enlaces Rápidos",
+    "home": "Inicio",
+    "menu": "Menú",
+    "reservation": "Reserva",
+    "contact": "Contacto y Acceso",
+    "newsletter": "Boletín informativo"
+  },
+  "Menu": {
+    "title": "La Carta",
+    "subtitle": "Descubra nuestros sabores",
+    "loading": "Cargando el Menú...",
+    "pageTitle": "Saboree la *Excelencia*",
+    "pageDescription": "Un menú seleccionado por nuestros chefs con estrellas Michelin, elaborado con pasión y productos de temporada.",
+    "starters": "Entrantes",
+    "mains": "Platos Principales",
+    "desserts": "Postres",
+    "drinks": "Bebidas"
+  },
+  "Reservation": {
+    "title": "Reservar una Mesa",
+    "subtitle": "Una mesa excepcional le espera",
+    "date": "Fecha de su visita",
+    "time": "Hora de su visita",
+    "guests": "Número de comensales",
+    "person": "Persona",
+    "persons": "Personas",
+    "name": "Su nombre",
+    "message": "Solicitudes especiales",
+    "confirmButton": "Confirmar Reserva"
+  },
+  "Cart": {
+    "title": "Su Carrito",
+    "emptyTitle": "Su carrito está vacío",
+    "emptySubtitle": "Déjese tentar por nuestra selección gastronómica",
+    "discoverMenu": "Descubrir la Carta",
+    "remove": "Eliminar",
+    "total": "Total",
+    "checkoutBtn": "Pedir",
+    "processing": "Procesando...",
+    "successMessage": "¡Pedido realizado con éxito!",
+    "errorMessage": "Se ha producido un error al realizar el pedido."
+  },
+  "Admin": {
+    "title": "Administración",
+    "overview": "Visión general",
+    "menu": "Gestión de Menú",
+    "reservations": "Reservas",
+    "orders": "Pedidos",
+    "config": "Configuración",
+    "logout": "Salir",
+    "loading": "Cargando Admin..."
+  }
+}
