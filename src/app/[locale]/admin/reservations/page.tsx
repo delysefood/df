@@ -91,7 +91,7 @@ export default function AdminReservationsPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
-            {reservations.map((res) => (
+            {Array.isArray(reservations) && reservations.map((res) => (
               <tr key={res._id} className="hover:bg-foreground/5 transition-colors">
                 <td className="px-8 py-6">
                   <div className="text-foreground font-black text-sm">{res.user?.name || 'Inconnu'}</div>
