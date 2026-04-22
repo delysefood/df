@@ -4,7 +4,7 @@ import React, { useRef, useEffect } from "react";
 import { motion, useInView, useAnimation } from "framer-motion";
 
 interface RevealProps {
-  children: JSX.Element;
+  children: React.ReactNode;
   width?: "fit-content" | "100%";
   delay?: number;
 }
