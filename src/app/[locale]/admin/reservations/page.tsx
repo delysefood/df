@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Check, X, Calendar } from 'lucide-react';
+import { Check, X, Calendar, Trash2 } from 'lucide-react';
 
 export default function AdminReservationsPage() {
   const [reservations, setReservations] = useState<any[]>([]);
@@ -25,6 +25,20 @@ export default function AdminReservationsPage() {
       });
       if (res.ok) {
         setReservations(prev => prev.map(r => r._id === id ? { ...r, status } : r));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const deleteReservation = async (id: string) => {
+    if (!confirm("Supprimer définitivement cette réservation ?")) return;
+    try {
+      const res = await fetch(`/api/admin/reservations/${id}`, {
+        method: 'DELETE',
+      });
+      if (res.ok) {
+        setReservations(prev => prev.filter(r => r._id !== id));
       }
     } catch (error) {
       console.error(error);
@@ -65,7 +79,7 @@ export default function AdminReservationsPage() {
                   {res.table ? res.table.name : 'Non assignée'}
                 </td>
                 <td className="px-6 py-4">
-                  <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase ${
+                   <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase ${
                     res.status === 'confirmed' ? 'bg-green-500/10 text-green-500 border border-green-500/20' : 
                     res.status === 'pending' ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20' : 
                     'bg-red-500/10 text-red-500 border border-red-500/20'
@@ -81,6 +95,7 @@ export default function AdminReservationsPage() {
                         <button onClick={() => updateStatus(res._id, 'cancelled')} className="w-8 h-8 flex items-center justify-center bg-red-500/10 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-colors" title="Annuler"><X size={16} /></button>
                       </>
                     )}
+                    <button onClick={() => deleteReservation(res._id)} className="w-8 h-8 flex items-center justify-center bg-red-600/10 text-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-colors" title="Supprimer définitivement"><Trash2 size={16} /></button>
                   </div>
                 </td>
               </tr>

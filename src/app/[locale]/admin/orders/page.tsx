@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Package, Check, X, Loader2, Calendar, ShoppingBag, ArrowLeft, Clock, MapPin } from 'lucide-react';
+import { Package, Check, X, Loader2, Calendar, ShoppingBag, ArrowLeft, Clock, MapPin, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
@@ -36,6 +36,24 @@ export default function AdminOrdersPage() {
          method: 'PATCH',
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify({ status })
+       });
+       if (res.ok) {
+         fetchOrders();
+       }
+    } catch (err) {
+       console.error(err);
+    } finally {
+       setUpdating(null);
+    }
+  };
+
+  const deleteOrder = async (id: string) => {
+    if (!confirm("Êtes-vous sûr de vouloir supprimer définitivement cette commande ?")) return;
+    
+    setUpdating(id);
+    try {
+       const res = await fetch(`/api/admin/orders/${id}`, {
+         method: 'DELETE',
        });
        if (res.ok) {
          fetchOrders();
@@ -158,6 +176,14 @@ export default function AdminOrdersPage() {
                         title="Annuler"
                       >
                          <X size={20} className="group-hover/btn:scale-110 transition-transform" />
+                      </button>
+                      <button 
+                        onClick={() => deleteOrder(order._id)}
+                        disabled={updating === order._id}
+                        className="w-14 h-14 rounded-2xl bg-foreground/5 flex items-center justify-center text-foreground/30 hover:bg-red-600 hover:text-white transition-all group/btn"
+                        title="Supprimer définitivement"
+                      >
+                         <Trash2 size={20} className="group-hover/btn:scale-110 transition-transform" />
                       </button>
                    </div>
                 </div>
