@@ -9,10 +9,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET as string;
 
-// Must disable body parsing — Stripe requires the raw body
-export const config = {
-  api: { bodyParser: false },
-};
+
 
 export async function POST(req: Request) {
   const sig = req.headers.get("stripe-signature");

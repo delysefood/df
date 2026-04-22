@@ -186,7 +186,7 @@ export default function ReservationPage() {
             )}
 
             {step === 2 && (
-              <motion.div initial={{ opacity: 0, h: 0 }} animate={{ opacity: 1, h: "auto" }} className="space-y-12 border-t border-border pt-10">
+              <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="space-y-12 border-t border-border pt-10">
                 <div className="space-y-4">
                   <h3 className="text-xl font-bold text-foreground text-center mb-6">Choisissez votre table</h3>
                   {availableTables.length === 0 ? (
