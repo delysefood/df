@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { ChevronRight, Leaf } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 import Magnetic from './animations/Magnetic';
-import SteamEffect from './animations/SteamEffect';
 import { useState, useEffect } from 'react';
 
 export default function Hero() {
@@ -137,7 +136,6 @@ export default function Hero() {
                {/* Outer Decorative Glow Circles */}
                <div className="absolute inset-0 bg-gold/10 blur-[120px] rounded-full scale-90 animate-pulse -z-10" />
                <div className="absolute inset-[-15%] border-[2px] border-gold/5 rounded-full -z-10 animate-spin-slow" />
-               <SteamEffect />
                
                <motion.div 
                  animate={{ rotate: 360 }}
