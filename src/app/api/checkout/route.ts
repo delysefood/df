@@ -45,7 +45,7 @@ export async function POST(req: Request) {
       payment_method_types: ["card"],
       line_items: items.map((i: any) => {
         const saucesText = i.selectedSauces?.length > 0 ? `Sauces: ${i.selectedSauces.join(', ')}` : '';
-        const extrasText = i.selectedExtras?.length > 0 ? `Suppléments: ${i.selectedExtras.map((e: any) => e.name).join(', ')}` : '';
+        const extrasText = i.selectedExtras?.length > 0 ? `Suppléments: ${i.selectedExtras.map((e: any) => `${e.name}${e.quantity > 1 ? ' x' + e.quantity : ''}`).join(', ')}` : '';
         const description = [saucesText, extrasText].filter(Boolean).join(' | ');
 
         return {

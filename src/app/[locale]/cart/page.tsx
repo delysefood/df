@@ -91,7 +91,7 @@ export default function CartPage() {
                          ))}
                          {item.selectedExtras.map((extra, idx) => (
                            <span key={idx} className="inline-flex items-center gap-1.5 px-3 py-1 bg-gold/5 text-gold rounded-lg text-[9px] font-black uppercase tracking-widest border border-gold/10">
-                              <Sparkles size={10} /> {extra.name}
+                              <Sparkles size={10} /> {extra.name} {extra.quantity > 1 ? `x${extra.quantity}` : ''}
                            </span>
                          ))}
                       </div>

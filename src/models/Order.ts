@@ -7,7 +7,8 @@ const OrderItemSchema = new Schema({
   quantity: { type: Number, required: true },
   extras: [{
     name: { type: String },
-    price: { type: Number }
+    price: { type: Number },
+    quantity: { type: Number, default: 1 }
   }],
   sauces: [{ type: String }],
 });

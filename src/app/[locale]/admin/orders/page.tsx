@@ -146,7 +146,7 @@ export default function AdminOrdersPage() {
                                    ))}
                                    {item.extras?.map((e: any, i: number) => (
                                      <span key={i} className="px-2 py-0.5 bg-gold/10 text-gold text-[8px] font-black uppercase rounded-md border border-gold/10">
-                                       + {e.name}
+                                       + {e.name} {e.quantity > 1 ? `x${e.quantity}` : ''}
                                      </span>
                                    ))}
                                 </div>

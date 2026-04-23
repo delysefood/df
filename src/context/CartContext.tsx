@@ -10,7 +10,7 @@ export interface CartItem {
   basePrice: number;
   quantity: number;
   image?: string;
-  selectedExtras: { name: string, price: number }[];
+  selectedExtras: { name: string, price: number, quantity: number }[];
   selectedSauces: string[];
 }
 
