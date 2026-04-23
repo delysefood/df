@@ -2,7 +2,7 @@
 
 import { useTranslations, useLocale } from 'next-intl';
 import { useCart } from '@/context/CartContext';
-import { Trash2, Plus, Minus, ShoppingBag, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Trash2, Plus, Minus, ShoppingBag, ArrowRight, ShieldCheck, Heart, Sparkles } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
@@ -22,7 +22,6 @@ export default function CartPage() {
       router.push('/auth/signin');
       return;
     }
-    // Navigate to our custom checkout page (Stripe Elements embedded)
     router.push(`/${locale}/checkout`);
   };
 
@@ -65,33 +64,51 @@ export default function CartPage() {
             <AnimatePresence>
               {cart.map((item) => (
                 <motion.div 
-                  key={item.id}
+                  key={item.cartId}
                   layout
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
-                  className="glass-card rounded-[2.5rem] p-6 flex flex-col md:flex-row items-center gap-6 border border-border"
+                  className="glass-card rounded-[2.5rem] p-6 lg:p-8 flex flex-col md:flex-row items-center gap-6 border border-border"
                 >
-                  <div className="w-24 h-24 rounded-[1.5rem] overflow-hidden bg-noir/5 flex-shrink-0">
+                  <div className="w-24 h-24 rounded-[2rem] overflow-hidden bg-noir/5 flex-shrink-0 border border-border">
                     <img src={item.image || '/photos/dish1.png'} alt={item.name} className="w-full h-full object-cover" />
                   </div>
 
-                  <div className="flex-1 space-y-1 text-center md:text-left">
-                    <h3 className="text-xl font-black text-foreground tracking-tight">{item.name}</h3>
-                    <p className="text-gold font-serif text-lg">{item.price}€</p>
+                  <div className="flex-1 space-y-4 text-center md:text-left">
+                    <div>
+                      <h3 className="text-xl font-black text-foreground tracking-tight">{item.name}</h3>
+                      <p className="text-gold font-black text-lg">{item.price.toFixed(2)}€</p>
+                    </div>
+
+                    {/* Display Sauces and Extras */}
+                    {(item.selectedSauces.length > 0 || item.selectedExtras.length > 0) && (
+                      <div className="flex flex-wrap gap-2 justify-center md:justify-start">
+                         {item.selectedSauces.map((sauce, idx) => (
+                           <span key={idx} className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-500/5 text-blue-500 rounded-lg text-[9px] font-black uppercase tracking-widest border border-blue-500/10">
+                              <Heart size={10} /> {sauce}
+                           </span>
+                         ))}
+                         {item.selectedExtras.map((extra, idx) => (
+                           <span key={idx} className="inline-flex items-center gap-1.5 px-3 py-1 bg-gold/5 text-gold rounded-lg text-[9px] font-black uppercase tracking-widest border border-gold/10">
+                              <Sparkles size={10} /> {extra.name}
+                           </span>
+                         ))}
+                      </div>
+                    )}
                   </div>
 
                   <div className="flex items-center gap-6">
-                    <div className="flex items-center gap-4 bg-foreground/5 dark:bg-white/5 rounded-2xl p-2 border border-border">
+                    <div className="flex items-center gap-4 bg-foreground/5 rounded-2xl p-2 border border-border">
                       <button 
-                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                        onClick={() => updateQuantity(item.cartId, item.quantity - 1)}
                         className="w-10 h-10 flex items-center justify-center text-foreground/40 hover:text-gold transition-colors"
                       >
                         <Minus size={18} />
                       </button>
                       <span className="text-foreground font-black text-lg w-4 text-center">{item.quantity}</span>
                       <button 
-                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        onClick={() => updateQuantity(item.cartId, item.quantity + 1)}
                         className="w-10 h-10 flex items-center justify-center text-foreground/40 hover:text-gold transition-colors"
                       >
                         <Plus size={18} />
@@ -99,7 +116,7 @@ export default function CartPage() {
                     </div>
                     
                     <button 
-                      onClick={() => removeFromCart(item.id)}
+                      onClick={() => removeFromCart(item.cartId)}
                       className="w-12 h-12 flex items-center justify-center text-foreground/20 hover:text-red-500 transition-colors"
                     >
                       <Trash2 size={20} />
@@ -112,13 +129,13 @@ export default function CartPage() {
 
           {/* Order Summary */}
           <div className="lg:sticky lg:top-40 space-y-6">
-            <div className="glass-card rounded-[2.5rem] p-10 border border-border space-y-8">
+            <div className="glass-card rounded-[3rem] p-10 border border-border space-y-8">
               <h2 className="text-2xl font-black text-foreground tracking-tight">Résumé</h2>
               
               <div className="space-y-4">
                  <div className="flex justify-between text-sm font-bold text-foreground/40 italic">
                     <span>Sous-total</span>
-                    <span>{totalPrice}€</span>
+                    <span>{totalPrice.toFixed(2)}€</span>
                  </div>
                  <div className="flex justify-between text-sm font-bold text-foreground/40 italic">
                     <span>Livraison</span>
@@ -126,7 +143,7 @@ export default function CartPage() {
                  </div>
                  <div className="pt-4 border-t border-border flex justify-between items-center">
                     <span className="text-lg font-black text-foreground uppercase tracking-widest">Total</span>
-                    <span className="text-3xl font-black text-gold">{totalPrice}€</span>
+                    <span className="text-3xl font-black text-gold">{totalPrice.toFixed(2)}€</span>
                  </div>
               </div>
 

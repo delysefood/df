@@ -31,6 +31,14 @@ const MenuItemSchema = new Schema({
   reviewsCount: { type: Number, default: 124 },
   image: { type: String }, // Cloudinary URL
   isAvailable: { type: Boolean, default: true },
+  extras: [{
+    name: { type: String },
+    price: { type: Number, default: 0 }
+  }],
+  sauceSettings: {
+    hasSauces: { type: Boolean, default: false },
+    maxSauces: { type: Number, default: 1 }
+  }
 }, { timestamps: true });
 
 const MenuItem = models.MenuItem || model('MenuItem', MenuItemSchema);

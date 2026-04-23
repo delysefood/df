@@ -5,6 +5,11 @@ const OrderItemSchema = new Schema({
   name: { type: String, required: true },
   price: { type: Number, required: true },
   quantity: { type: Number, required: true },
+  extras: [{
+    name: { type: String },
+    price: { type: Number }
+  }],
+  sauces: [{ type: String }],
 });
 
 const OrderSchema = new Schema({

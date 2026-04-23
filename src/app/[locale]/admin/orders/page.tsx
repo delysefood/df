@@ -126,15 +126,31 @@ export default function AdminOrdersPage() {
                    </div>
                 </div>
 
-                {/* Items Summary */}
                 <div className="flex-1 max-w-md">
-                   <div className="space-y-3">
-                      <p className="text-[9px] font-black text-gold uppercase tracking-[0.2em]">Contenu du Panier</p>
-                      <div className="grid grid-cols-2 gap-4">
+                   <div className="space-y-4">
+                      <p className="text-[9px] font-black text-gold uppercase tracking-[0.2em] border-b border-gold/10 pb-2">Détails de la Préparation</p>
+                      <div className="space-y-4">
                          {order.items.map((item: any, idx: number) => (
-                           <div key={idx} className="flex items-center gap-2 text-xs font-bold text-foreground/60">
-                              <span className="w-5 h-5 rounded-md bg-foreground/5 flex items-center justify-center text-[10px] text-gold">{item.quantity}</span>
-                              <span className="truncate">{item.name}</span>
+                           <div key={idx} className="space-y-2">
+                              <div className="flex items-center gap-3">
+                                 <span className="w-6 h-6 rounded-lg bg-gold text-white flex items-center justify-center text-[10px] font-black">{item.quantity}</span>
+                                 <span className="text-sm font-black text-foreground">{item.name}</span>
+                              </div>
+                              
+                              {(item.sauces?.length > 0 || item.extras?.length > 0) && (
+                                <div className="ml-9 flex flex-wrap gap-2">
+                                   {item.sauces?.map((s: string, i: number) => (
+                                     <span key={i} className="px-2 py-0.5 bg-blue-500/10 text-blue-500 text-[8px] font-black uppercase rounded-md border border-blue-500/10">
+                                       {s}
+                                     </span>
+                                   ))}
+                                   {item.extras?.map((e: any, i: number) => (
+                                     <span key={i} className="px-2 py-0.5 bg-gold/10 text-gold text-[8px] font-black uppercase rounded-md border border-gold/10">
+                                       + {e.name}
+                                     </span>
+                                   ))}
+                                </div>
+                              )}
                            </div>
                          ))}
                       </div>

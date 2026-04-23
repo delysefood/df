@@ -32,6 +32,8 @@ export async function POST(req: Request) {
         name: i.name,
         price: i.price,
         quantity: i.quantity,
+        extras: i.selectedExtras || [],
+        sauces: i.selectedSauces || [],
       })),
       totalPrice,
       specialInstructions,
@@ -41,17 +43,24 @@ export async function POST(req: Request) {
 
     const stripeSession = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
-      line_items: items.map((i: any) => ({
-        price_data: {
-          currency: "eur",
-          product_data: {
-            name: i.name,
-            ...(i.image ? { images: [i.image] } : {}),
+      line_items: items.map((i: any) => {
+        const saucesText = i.selectedSauces?.length > 0 ? `Sauces: ${i.selectedSauces.join(', ')}` : '';
+        const extrasText = i.selectedExtras?.length > 0 ? `Suppléments: ${i.selectedExtras.map((e: any) => e.name).join(', ')}` : '';
+        const description = [saucesText, extrasText].filter(Boolean).join(' | ');
+
+        return {
+          price_data: {
+            currency: "eur",
+            product_data: {
+              name: i.name,
+              description: description || undefined,
+              ...(i.image ? { images: [i.image] } : {}),
+            },
+            unit_amount: Math.round(i.price * 100),
           },
-          unit_amount: Math.round(i.price * 100),
-        },
-        quantity: i.quantity,
-      })),
+          quantity: i.quantity,
+        };
+      }),
       mode: "payment",
       success_url: successUrl
         ? `${successUrl}?orderId=${order._id}&session_id={CHECKOUT_SESSION_ID}`
