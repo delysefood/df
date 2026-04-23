@@ -316,9 +316,59 @@ export default function AdminMenuPage() {
                     </div>
                   </div>
 
-                  {/* Right Column */}
                   <div className="space-y-12">
-                    <h3 className="text-gold font-black uppercase tracking-[0.2em] text-[10px] border-b border-gold/10 pb-4 flex items-center gap-3"><Sparkles size={14}/> Options & Suppléments</h3>
+                    <h3 className="text-gold font-black uppercase tracking-[0.2em] text-[10px] border-b border-gold/10 pb-4 flex items-center gap-3"><Sparkles size={14}/> Paramètres Généraux</h3>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                       {/* Image Upload */}
+                       <div 
+                        onClick={() => fileInputRef.current?.click()}
+                        className="group relative w-full aspect-square rounded-3xl bg-foreground/5 border-2 border-dashed border-border hover:border-gold transition-all cursor-pointer overflow-hidden flex flex-col items-center justify-center gap-3"
+                      >
+                        <input type="file" ref={fileInputRef} onChange={handleFileUpload} accept="image/*" className="hidden" />
+                        {formData.image ? (
+                          <>
+                            <img src={formData.image} alt="Preview" className="w-full h-full object-cover" />
+                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center flex-col gap-2">
+                              <Camera className="text-white" size={32} />
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center text-gold group-hover:scale-110 transition-transform">
+                              {uploading ? <Loader2 className="animate-spin" size={24} /> : <Upload size={24} />}
+                            </div>
+                            <p className="text-foreground font-black text-[10px] uppercase tracking-widest text-center px-4">Cliquer pour l'image</p>
+                          </>
+                        )}
+                      </div>
+
+                      <div className="space-y-6">
+                        <div className="space-y-2">
+                          <label className="text-[10px] font-black uppercase tracking-widest text-foreground/40 ml-2">Prix (€)</label>
+                          <input 
+                            type="number" step="0.01"
+                            value={formData.price}
+                            onChange={(e) => setFormData({...formData, price: e.target.value})}
+                            className="w-full bg-foreground/5 border-none rounded-2xl px-6 py-4 text-xl font-black text-gold focus:ring-2 focus:ring-gold/50 transition-all outline-none"
+                            required
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-[10px] font-black uppercase tracking-widest text-foreground/40 ml-2">Catégorie</label>
+                          <select 
+                            value={formData.category}
+                            onChange={(e) => setFormData({...formData, category: e.target.value})}
+                            className="w-full bg-foreground/5 border-none h-14 rounded-2xl px-6 text-xs font-black uppercase tracking-widest text-foreground focus:ring-2 focus:ring-gold/50 transition-all outline-none appearance-none cursor-pointer"
+                          >
+                            <option value="starter">Entrée</option>
+                            <option value="main">Plat Principal</option>
+                            <option value="dessert">Dessert</option>
+                            <option value="drink">Boisson</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
                     
                     {/* Sauces */}
                     <div className="p-8 rounded-[2rem] bg-blue-500/[0.03] border border-blue-500/20 space-y-6">
