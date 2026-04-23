@@ -302,6 +302,15 @@ export default function AdminMenuPage() {
                             className="w-full bg-background border-none rounded-xl px-6 py-4 text-sm font-bold text-foreground focus:ring-2 focus:ring-gold/50 transition-all outline-none"
                             required={lang === 'fr'}
                           />
+                          <textarea 
+                            placeholder={`Description détaillée`}
+                            value={formData.description?.[lang] || ''}
+                            onChange={(e) => setFormData({...formData, description: {...formData.description, [lang]: e.target.value}})}
+                            dir={lang === 'ar' ? 'rtl' : 'ltr'}
+                            rows={2}
+                            className="w-full bg-background border-none rounded-xl px-6 py-4 text-sm font-bold text-foreground focus:ring-2 focus:ring-gold/50 transition-all outline-none resize-none shadow-sm"
+                            required={lang === 'fr'}
+                          />
                         </div>
                       ))}
                     </div>
