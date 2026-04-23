@@ -41,12 +41,21 @@ export async function sendOrderEmails(data: OrderEmailData) {
   const email = settings?.footer?.email   || "contact@delysefood.com";
   const logo  = settings?.logo || "https://res.cloudinary.com/dnfuzes76/image/upload/v1713106518/logo_delyse_food_gold.png";
 
-  const itemsHtml = items.map(item => `
-    <tr>
-      <td><strong>${item.quantity}x</strong> ${item.name}</td>
-      <td style="text-align: right;">${(item.price * item.quantity).toFixed(2)}€</td>
-    </tr>
-  `).join('');
+  const itemsHtml = items.map(item => {
+    const sauces = item.sauces?.length > 0 ? `<div style="font-size: 11px; color: #888; font-style: italic;">Sauces: ${item.sauces.join(', ')}</div>` : '';
+    const extras = item.extras?.length > 0 ? `<div style="font-size: 11px; color: #C5A059; font-weight: bold;">+ ${item.extras.map((e: any) => e.name).join(', ')}</div>` : '';
+    
+    return `
+      <tr>
+        <td>
+          <div style="font-size: 14px; font-weight: bold; color: #fff;">${item.quantity}x ${item.name}</div>
+          ${sauces}
+          ${extras}
+        </td>
+        <td style="text-align: right; vertical-align: top;">${(item.price * item.quantity).toFixed(2)}€</td>
+      </tr>
+    `;
+  }).join('');
 
   const generateHtml = (title: string, subtitle: string, bodyContent: string) => `
     <!DOCTYPE html>
