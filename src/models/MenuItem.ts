@@ -33,11 +33,13 @@ const MenuItemSchema = new Schema({
   isAvailable: { type: Boolean, default: true },
   extras: [{
     name: { type: String },
-    price: { type: Number, default: 0 }
+    price: { type: Number, default: 0 },
+    isPopular: { type: Boolean, default: false }
   }],
   sauceSettings: {
     hasSauces: { type: Boolean, default: false },
-    maxSauces: { type: Number, default: 1 }
+    maxSauces: { type: Number, default: 1 },
+    maxExtras: { type: Number, default: 12 }
   }
 }, { timestamps: true });
 
