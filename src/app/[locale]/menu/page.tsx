@@ -199,34 +199,34 @@ export default function MenuPage() {
                              const isLimitReached = totalExtrasCount >= (optionItem.sauceSettings?.maxExtras || 12);
 
                              return (
-                               <div key={i} className={`flex items-center justify-between p-5 rounded-[2rem] border transition-all ${qty > 0 ? 'bg-gold/5 border-gold shadow-sm' : 'bg-background border-border hover:bg-foreground/[0.02]'}`}>
-                                  <div className="flex flex-col">
-                                     <div className="flex items-center gap-3">
-                                        <span className="text-sm font-black text-foreground">{ex.name}</span>
+                               <div key={i} className={`flex items-center justify-between p-4 sm:p-5 rounded-[2rem] border transition-all ${qty > 0 ? 'bg-gold/5 border-gold shadow-sm' : 'bg-background border-border hover:bg-foreground/[0.02]'}`}>
+                                  <div className="flex flex-col flex-1 min-w-0 mr-3">
+                                     <div className="flex flex-wrap items-center gap-2">
+                                        <span className="text-sm font-black text-foreground truncate">{ex.name}</span>
                                         {ex.isPopular && (
-                                          <span className="text-[8px] font-black uppercase bg-gold text-white px-2 py-0.5 rounded-full flex items-center gap-1">
+                                          <span className="text-[7px] sm:text-[8px] font-black uppercase bg-gold text-white px-2 py-0.5 rounded-full flex items-center gap-1 shrink-0">
                                              <Star size={8} className="fill-current" /> Popular
                                           </span>
                                         )}
                                      </div>
-                                     <span className="text-xs font-black text-gold mt-1">+€{ex.price.toFixed(2)} / unité</span>
+                                     <span className="text-[10px] sm:text-xs font-black text-gold mt-1">+€{ex.price.toFixed(2)} / unité</span>
                                   </div>
 
-                                  <div className="flex items-center gap-4 bg-foreground/5 p-2 rounded-2xl border border-border">
+                                  <div className="flex items-center gap-2 sm:gap-4 bg-foreground/5 p-1.5 sm:p-2 rounded-2xl border border-border shrink-0">
                                      <button 
                                       onClick={() => updateExtraQuantity(ex, -1)}
-                                      className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all ${qty > 0 ? 'bg-white text-gold shadow-sm' : 'text-foreground/20 cursor-not-allowed'}`}
+                                      className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center transition-all ${qty > 0 ? 'bg-white text-gold shadow-sm' : 'text-foreground/20 cursor-not-allowed'}`}
                                       disabled={qty === 0}
                                      >
-                                        <Minus size={14} strokeWidth={3} />
+                                        <Minus size={12} strokeWidth={3} />
                                      </button>
-                                     <span className={`text-sm font-black w-4 text-center ${qty > 0 ? 'text-foreground' : 'text-foreground/30'}`}>{qty}</span>
+                                     <span className={`text-[12px] sm:text-sm font-black w-4 text-center ${qty > 0 ? 'text-foreground' : 'text-foreground/30'}`}>{qty}</span>
                                      <button 
                                       onClick={() => updateExtraQuantity(ex, 1)}
-                                      className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all ${!isLimitReached ? 'bg-gold text-white shadow-md' : 'bg-foreground/5 text-foreground/10 cursor-not-allowed'}`}
+                                      className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center transition-all ${!isLimitReached ? 'bg-gold text-white shadow-md' : 'bg-foreground/5 text-foreground/10 cursor-not-allowed'}`}
                                       disabled={isLimitReached}
                                      >
-                                        <Plus size={14} strokeWidth={3} />
+                                        <Plus size={12} strokeWidth={3} />
                                      </button>
                                   </div>
                                </div>
