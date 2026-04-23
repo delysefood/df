@@ -2,7 +2,7 @@
 
 import { useTranslations, useLocale } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { Plus, Star, Search, ShoppingBag, X, Loader2, Check, Info, Flame, Minus } from 'lucide-react';
+import { Plus, Star, Search, ShoppingBag, X, Loader2, Check, Info, Flame, Minus, Heart, Sparkles } from 'lucide-react';
 import { useCart, CartItem } from '@/context/CartContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
