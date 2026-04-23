@@ -276,13 +276,13 @@ export default function AdminMenuPage() {
                   <h2 className="text-3xl font-black text-foreground tracking-tighter">
                     {editingItem ? 'Modifier le' : 'Nouveau'} <span className="text-gold italic font-serif">Plat</span>
                   </h2>
-                  <p className="text-foreground/40 text-[10px] uppercase font-black tracking-widest mt-1">Saisie Multilingue & Options Personnalisées</p>
+                  <p className="text-foreground/40 text-[10px] uppercase font-black tracking-widest mt-1">Édition Complète des Options</p>
                 </div>
                 <button onClick={() => setIsModalOpen(false)} className="w-12 h-12 rounded-2xl bg-foreground/5 flex items-center justify-center text-foreground hover:rotate-90 transition-all"><X size={24} /></button>
               </div>
 
-              <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-12 space-y-16">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+              <div className="flex-1 overflow-y-auto p-12 space-y-16 scrollbar-elegant">
+                <form id="menu-form" onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                   {/* Left Column: Multilingual Content */}
                   <div className="space-y-10">
                     <h3 className="text-gold font-black uppercase tracking-[0.2em] text-[10px] border-b border-gold/10 pb-4 flex items-center gap-3"><ChefHat size={14}/> Contenu Multilingue</h3>
@@ -291,7 +291,7 @@ export default function AdminMenuPage() {
                         <div key={lang} className="space-y-4 p-6 rounded-3xl bg-foreground/5 border border-border group-within:border-gold/30 transition-colors">
                           <div className="flex items-center gap-2">
                             <span className="w-8 h-8 rounded-lg bg-gold text-white text-[10px] font-black flex items-center justify-center uppercase">{lang}</span>
-                            <span className="text-[10px] font-black uppercase tracking-widest text-foreground/40">Saisie {lang.toUpperCase()}</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-foreground/40">Nom & Description ({lang.toUpperCase()})</span>
                           </div>
                           <input 
                             type="text"
@@ -374,115 +374,145 @@ export default function AdminMenuPage() {
                        </div>
                     </div>
 
-                    {/* Sauces Settings */}
-                    <div className="space-y-8 p-8 rounded-[2rem] bg-foreground/5 border border-border relative overflow-hidden">
-                       <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 blur-3xl" />
+                    {/* Sauces Settings - REDESIGNED FOR MAX VISIBILITY */}
+                    <div className="space-y-8 p-10 rounded-[2.5rem] bg-blue-500/[0.03] border-2 border-blue-500/20 relative overflow-hidden">
                        <div className="flex items-center justify-between">
-                          <label className="text-sm font-black text-foreground tracking-tight flex items-center gap-3">
-                             <Heart size={18} className="text-blue-500" /> Gestion des Sauces
-                          </label>
+                          <div className="flex items-center gap-4">
+                             <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500">
+                                <Heart size={24} />
+                             </div>
+                             <div>
+                                <h4 className="text-lg font-black text-foreground tracking-tight">Gestion des Sauces</h4>
+                                <p className="text-[10px] font-black uppercase tracking-widest text-blue-500/60">Activer le choix client</p>
+                             </div>
+                          </div>
                           <button 
                             type="button"
                             onClick={() => setFormData({...formData, sauceSettings: {...formData.sauceSettings, hasSauces: !formData.sauceSettings.hasSauces}})}
-                            className={`w-12 h-7 rounded-full transition-all duration-500 relative ${formData.sauceSettings.hasSauces ? 'bg-blue-500' : 'bg-foreground/10'}`}
+                            className={`w-14 h-8 rounded-full transition-all duration-500 relative ${formData.sauceSettings.hasSauces ? 'bg-blue-500 shadow-lg shadow-blue-500/40' : 'bg-foreground/10'}`}
                           >
-                            <div className={`absolute top-1 w-5 h-5 rounded-full bg-white shadow-md transition-all duration-500 ${formData.sauceSettings.hasSauces ? 'left-6' : 'left-1'}`} />
+                            <div className={`absolute top-1 w-6 h-6 rounded-full bg-white shadow-md transition-all duration-500 ${formData.sauceSettings.hasSauces ? 'left-7' : 'left-1'}`} />
                           </button>
                        </div>
                        
                        {formData.sauceSettings.hasSauces && (
                          <motion.div 
-                           initial={{ opacity: 0, h: 0 }}
-                           animate={{ opacity: 1, h: 'auto' }}
-                           className="pt-6 border-t border-border space-y-4"
+                           initial={{ opacity: 0, height: 0 }}
+                           animate={{ opacity: 1, height: 'auto' }}
+                           className="pt-8 border-t border-blue-500/10 space-y-4"
                          >
                             <label className="text-[10px] font-black uppercase tracking-widest text-foreground/40 ml-2">Nombre de sauces autorisées</label>
-                            <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-6">
                                <input 
                                  type="number" min="1" max="5"
                                  value={formData.sauceSettings.maxSauces}
                                  onChange={(e) => setFormData({...formData, sauceSettings: {...formData.sauceSettings, maxSauces: parseInt(e.target.value) || 1}})}
-                                 className="w-20 bg-background border-none rounded-xl px-4 py-3 text-lg font-black text-blue-500 focus:ring-2 focus:ring-blue-500/50 outline-none text-center"
+                                 className="w-24 bg-background border-2 border-blue-500/20 rounded-2xl px-4 py-4 text-2xl font-black text-blue-500 focus:ring-2 focus:ring-blue-500 outline-none text-center"
                                />
-                               <span className="text-xs font-bold text-foreground/40 italic">Les sauces seront sélectionnées par le client parmi la liste prédéfinie.</span>
+                               <span className="text-xs font-bold text-foreground/40 italic leading-relaxed">Le client pourra choisir parmi la liste Algérienne, Mayo, Ketchup, etc.</span>
                             </div>
                          </motion.div>
                        )}
                     </div>
 
-                    {/* Extras Settings */}
-                    <div className="space-y-8 p-8 rounded-[2rem] bg-foreground/5 border border-border relative overflow-hidden">
-                       <div className="absolute top-0 right-0 w-24 h-24 bg-gold/5 blur-3xl" />
-                       <div className="flex items-center justify-between mb-4">
-                          <label className="text-sm font-black text-foreground tracking-tight flex items-center gap-3">
-                             <Plus size={18} className="text-gold" /> Suppléments (Extras)
-                          </label>
+                    {/* Extras Settings - REDESIGNED FOR MAX VISIBILITY */}
+                    <div className="space-y-8 p-10 rounded-[2.5rem] bg-gold/[0.03] border-2 border-gold/20 relative overflow-hidden">
+                       <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-4">
+                             <div className="w-12 h-12 rounded-2xl bg-gold/10 flex items-center justify-center text-gold">
+                                <Plus size={24} />
+                             </div>
+                             <div>
+                                <h4 className="text-lg font-black text-foreground tracking-tight">Suppléments (Extras)</h4>
+                                <p className="text-[10px] font-black uppercase tracking-widest text-gold/60">Ajouter des options payantes</p>
+                             </div>
+                          </div>
                           <button 
                             type="button"
                             onClick={addExtra}
-                            className="bg-gold/10 text-gold px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-gold hover:text-white transition-all"
+                            className="bg-gold text-white px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-lg shadow-gold/20"
                           >
-                             Ajouter
+                             Ajouter un extra
                           </button>
                        </div>
 
-                       <div className="space-y-4">
+                       <div className="space-y-4 pt-4 border-t border-gold/10">
                           {formData.extras.map((extra: any, index: number) => (
                             <motion.div 
                               initial={{ opacity: 0, x: -10 }}
                               animate={{ opacity: 1, x: 0 }}
                               key={index} 
-                              className="flex gap-4 items-center"
+                              className="flex gap-4 items-center bg-background p-4 rounded-2xl border border-gold/10"
                             >
                                <input 
                                  type="text"
                                  placeholder="Nom (ex: Oeuf)"
                                  value={extra.name}
                                  onChange={(e) => updateExtra(index, 'name', e.target.value)}
-                                 className="flex-1 bg-background border-none rounded-xl px-4 py-3 text-xs font-bold text-foreground focus:ring-2 focus:ring-gold/50 outline-none"
+                                 className="flex-1 bg-foreground/5 border-none rounded-xl px-4 py-3 text-xs font-bold text-foreground focus:ring-2 focus:ring-gold/50 outline-none"
                                />
-                               <input 
-                                 type="number" step="0.5"
-                                 placeholder="Prix"
-                                 value={extra.price}
-                                 onChange={(e) => updateExtra(index, 'price', e.target.value)}
-                                 className="w-24 bg-background border-none rounded-xl px-4 py-3 text-xs font-bold text-gold focus:ring-2 focus:ring-gold/50 outline-none"
-                               />
+                               <div className="relative">
+                                 <input 
+                                   type="number" step="0.5"
+                                   placeholder="Prix"
+                                   value={extra.price}
+                                   onChange={(e) => updateExtra(index, 'price', e.target.value)}
+                                   className="w-24 bg-foreground/5 border-none rounded-xl px-4 py-3 text-xs font-black text-gold focus:ring-2 focus:ring-gold/50 outline-none pr-8 text-right"
+                                 />
+                                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-black text-gold/40">€</span>
+                               </div>
                                <button 
                                  type="button"
                                  onClick={() => removeExtra(index)}
-                                 className="w-10 h-10 rounded-xl flex items-center justify-center text-foreground/20 hover:text-red-500 transition-colors"
+                                 className="w-10 h-10 rounded-xl flex items-center justify-center text-foreground/10 hover:text-red-500 hover:bg-red-500/5 transition-all"
                                >
                                   <Trash2 size={16} />
                                </button>
                             </motion.div>
                           ))}
                           {formData.extras.length === 0 && (
-                            <p className="text-[10px] font-bold text-foreground/20 italic text-center py-4">Aucun supplément configuré pour ce plat.</p>
+                            <div className="text-center py-6">
+                               <p className="text-[10px] font-bold text-foreground/20 italic">Aucun supplément pour le moment. Cliquez sur "Ajouter un extra".</p>
+                            </div>
                           )}
                        </div>
                     </div>
-                  </div>
-                </div>
 
-                <div className="pt-10 border-t border-border flex justify-end gap-6">
-                  <button 
-                    type="button"
-                    onClick={() => setIsModalOpen(false)}
-                    className="px-10 py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest text-foreground/40 hover:bg-foreground/5 transition-all"
-                  >
-                    Annuler
-                  </button>
-                  <button 
-                    type="submit"
-                    disabled={saving}
-                    className="px-12 py-5 bg-gold text-white rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-gold/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-3 disabled:opacity-50"
-                  >
-                    {saving ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />}
-                    Sauvegarder le Plat
-                  </button>
-                </div>
-              </form>
+                    <div className="flex items-center justify-between p-8 rounded-3xl bg-foreground/5 border border-border">
+                        <div className="space-y-1">
+                          <p className="text-[10px] font-black uppercase tracking-widest text-foreground/60">Disponibilité du plat</p>
+                          <p className="text-[9px] font-bold text-foreground/30 uppercase tracking-widest italic">{formData.isAvailable ? 'En stock' : 'Indisponible'}</p>
+                        </div>
+                        <button 
+                          type="button"
+                          onClick={() => setFormData({...formData, isAvailable: !formData.isAvailable})}
+                          className={`w-14 h-8 rounded-full transition-all duration-500 relative ${formData.isAvailable ? 'bg-gold' : 'bg-foreground/10'}`}
+                        >
+                          <div className={`absolute top-1 w-6 h-6 rounded-full bg-white shadow-md transition-all duration-500 ${formData.isAvailable ? 'left-7' : 'left-1'}`} />
+                        </button>
+                      </div>
+                  </div>
+                </form>
+              </div>
+
+              <div className="p-8 md:p-12 border-t border-border flex justify-end gap-6 bg-foreground/[0.02]">
+                <button 
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="px-10 py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest text-foreground/40 hover:bg-foreground/5 transition-all"
+                >
+                  Annuler
+                </button>
+                <button 
+                  form="menu-form"
+                  type="submit"
+                  disabled={saving}
+                  className="px-12 py-5 bg-gold text-white rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-xl shadow-gold/30 hover:scale-105 active:scale-95 transition-all flex items-center gap-3 disabled:opacity-50"
+                >
+                  {saving ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />}
+                  Sauvegarder les modifications
+                </button>
+              </div>
             </motion.div>
           </div>
         )}
