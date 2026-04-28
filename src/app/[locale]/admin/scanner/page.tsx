@@ -137,70 +137,100 @@ export default function ScannerPage() {
                   <p className="text-xs uppercase tracking-widest font-black">Aucune commande scannée</p>
                 </motion.div>
               ) : (
-                scannedOrders.map((order) => (
-                  <motion.div 
-                    key={order._id}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="glass-card p-6 rounded-3xl border border-border relative overflow-hidden"
-                  >
-                    <div className="flex justify-between items-start mb-4">
-                      <div>
-                        <p className="text-2xl font-black text-foreground">#{order._id.slice(-6).toUpperCase()}</p>
-                        <p className="text-[10px] uppercase tracking-widest text-foreground/40">{order.user?.name || 'Inconnu'}</p>
-                      </div>
-                      <Link href={`/admin/orders/${order._id}`}>
-                        <button className="w-10 h-10 rounded-full bg-foreground/5 flex items-center justify-center text-gold hover:bg-gold hover:text-white transition-all">
-                          <ExternalLink size={16} />
-                        </button>
-                      </Link>
-                    </div>
-
-                    {/* Order Type Info */}
-                    <div className="bg-foreground/5 rounded-2xl p-4 flex items-center gap-4">
-                      {order.orderType === 'dine_in' && (
-                        <>
-                          <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center font-black">
-                            T{order.tableNumber}
-                          </div>
+                Object.entries(
+                  scannedOrders.reduce((acc, order) => {
+                    const dateStr = new Date(order.createdAt || Date.now()).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+                    if (!acc[dateStr]) acc[dateStr] = [];
+                    acc[dateStr].push(order);
+                    return acc;
+                  }, {} as Record<string, any[]>)
+                ).map(([dateLabel, ordersForDate]) => (
+                  <div key={dateLabel} className="space-y-4">
+                    <h3 className="text-[10px] font-black uppercase tracking-widest text-gold border-b border-gold/10 pb-2 capitalize">
+                      {dateLabel}
+                    </h3>
+                    {(ordersForDate as any[]).map((order) => (
+                      <motion.div 
+                        key={order._id}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="glass-card p-6 rounded-3xl border border-border relative overflow-hidden"
+                      >
+                        <div className="flex justify-between items-start mb-4">
                           <div>
-                            <p className="text-[10px] font-black uppercase tracking-widest text-foreground">Sur Place</p>
-                            <p className="text-foreground/50 text-xs">Table {order.tableNumber}</p>
+                            <div className="flex items-center gap-3">
+                              <p className="text-2xl font-black text-foreground">#{order._id.slice(-6).toUpperCase()}</p>
+                              <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
+                                order.status === 'delivered' ? 'bg-emerald-500/10 text-emerald-500' : 
+                                order.status === 'pending' ? 'bg-amber-500/10 text-amber-500 animate-pulse' : 
+                                order.status === 'preparing' ? 'bg-blue-500/10 text-blue-500' : 
+                                'bg-red-500/10 text-red-500'
+                              }`}>
+                                {order.status}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-3 mt-1">
+                              <p className="text-[10px] uppercase tracking-widest text-foreground/40">{order.user?.name || 'Inconnu'}</p>
+                              <span className="w-1 h-1 rounded-full bg-foreground/20"></span>
+                              <p className="text-[10px] uppercase tracking-widest text-foreground/40 font-bold">
+                                {new Date(order.createdAt || Date.now()).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+                              </p>
+                            </div>
                           </div>
-                        </>
-                      )}
-                      
-                      {order.orderType === 'takeaway' && (
-                        <>
-                          <div className="w-10 h-10 rounded-xl bg-orange-500/10 text-orange-500 flex items-center justify-center">
-                            <Package size={20} />
-                          </div>
-                          <div>
-                            <p className="text-[10px] font-black uppercase tracking-widest text-foreground">À emporter</p>
-                          </div>
-                        </>
-                      )}
-
-                      {order.orderType === 'delivery' && (
-                        <>
-                          <div className="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center">
-                            <MapPin size={20} />
-                          </div>
-                          <div>
-                            <p className="text-[10px] font-black uppercase tracking-widest text-foreground mb-1">Livraison</p>
-                            <p className="text-foreground/50 text-xs line-clamp-1">{order.deliveryDetails?.address}</p>
-                          </div>
-                        </>
-                      )}
-
-                      {!order.orderType && (
-                        <div className="text-foreground/40 text-[10px] uppercase font-black tracking-widest flex items-center gap-2">
-                           <CheckCircle2 size={16} className="text-gold" />
-                           Mode non défini
+                          <Link href={`/admin/orders/${order._id}`}>
+                            <button className="w-10 h-10 rounded-full bg-foreground/5 flex items-center justify-center text-gold hover:bg-gold hover:text-white transition-all">
+                              <ExternalLink size={16} />
+                            </button>
+                          </Link>
                         </div>
-                      )}
-                    </div>
-                  </motion.div>
+
+                        {/* Order Type Info */}
+                        <div className="bg-foreground/5 rounded-2xl p-4 flex items-center gap-4 mt-4">
+                          {order.orderType === 'dine_in' && (
+                            <>
+                              <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center font-black">
+                                T{order.tableNumber}
+                              </div>
+                              <div>
+                                <p className="text-[10px] font-black uppercase tracking-widest text-foreground">Sur Place</p>
+                                <p className="text-foreground/50 text-xs">Table {order.tableNumber}</p>
+                              </div>
+                            </>
+                          )}
+                          
+                          {order.orderType === 'takeaway' && (
+                            <>
+                              <div className="w-10 h-10 rounded-xl bg-orange-500/10 text-orange-500 flex items-center justify-center">
+                                <Package size={20} />
+                              </div>
+                              <div>
+                                <p className="text-[10px] font-black uppercase tracking-widest text-foreground">À emporter</p>
+                              </div>
+                            </>
+                          )}
+
+                          {order.orderType === 'delivery' && (
+                            <>
+                              <div className="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center">
+                                <MapPin size={20} />
+                              </div>
+                              <div>
+                                <p className="text-[10px] font-black uppercase tracking-widest text-foreground mb-1">Livraison</p>
+                                <p className="text-foreground/50 text-xs line-clamp-1">{order.deliveryDetails?.address}</p>
+                              </div>
+                            </>
+                          )}
+
+                          {!order.orderType && (
+                            <div className="text-foreground/40 text-[10px] uppercase font-black tracking-widest flex items-center gap-2">
+                               <CheckCircle2 size={16} className="text-gold" />
+                               Mode non défini
+                            </div>
+                          )}
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
                 ))
               )}
             </AnimatePresence>
