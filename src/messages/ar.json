@@ -125,6 +125,9 @@
     "delivery": "توصيل",
     "table": "طاولة",
     "modeNotDefined": "الوضع غير محدد",
+    "role": "الدور",
+    "user": "مستخدم",
+    "admin": "مدير",
     "loading": "جاري التحميل..."
   },
   "Contact": {

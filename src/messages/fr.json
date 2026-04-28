@@ -125,6 +125,9 @@
     "delivery": "Livraison",
     "table": "Table",
     "modeNotDefined": "Mode non défini",
+    "role": "Rôle",
+    "user": "Utilisateur",
+    "admin": "Administrateur",
     "loading": "Chargement Admin..."
   },
   "Contact": {

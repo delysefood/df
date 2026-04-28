@@ -4,9 +4,11 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Users, X, Edit, Trash2, ShieldBan, ShieldCheck, Mail, ArrowLeft, Loader2, Search, Plus } from 'lucide-react';
 import { useParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 
 export default function AdminClientsPage() {
+  const t = useTranslations('Admin');
   const { locale } = useParams();
   const [clients, setClients] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -155,14 +157,20 @@ export default function AdminClientsPage() {
               <div className="flex items-center gap-4">
                 <div className={`w-14 h-14 rounded-2xl flex items-center justify-center font-black text-2xl shadow-inner ${
                   client.status === 'blocked' ? 'bg-red-500/10 text-red-500' : 
-                  client.role === 'admin' ? 'bg-indigo-500/10 text-indigo-500' : 'bg-gold/10 text-gold'
+                  client.role === 'admin' ? 'bg-indigo-500/10 text-indigo-500' : 
+                  client.role === 'server' ? 'bg-emerald-500/10 text-emerald-500' :
+                  'bg-gold/10 text-gold'
                 }`}>
                   {client.name.charAt(0)}
                 </div>
                 <div>
                   <h3 className="font-bold text-lg text-foreground tracking-tight line-clamp-1">{client.name}</h3>
                   <div className="flex items-center gap-2 text-[10px] uppercase font-black tracking-widest mt-1">
-                    <span className={client.role === 'admin' ? 'text-indigo-500' : 'text-gold'}>{client.role}</span>
+                    <span className={
+                      client.role === 'admin' ? 'text-indigo-500' : 
+                      client.role === 'server' ? 'text-emerald-500' : 
+                      'text-gold'
+                    }>{t(client.role)}</span>
                     <span className="text-foreground/20">•</span>
                     <span className={client.status === 'blocked' ? 'text-red-500' : 'text-emerald-500'}>{client.status}</span>
                   </div>
@@ -243,10 +251,11 @@ export default function AdminClientsPage() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="text-[10px] uppercase font-black tracking-widest text-foreground/40 ml-2 block mb-2">Rôle</label>
+                    <label className="text-[10px] uppercase font-black tracking-widest text-foreground/40 ml-2 block mb-2">{t('role')}</label>
                     <select value={formData.role} onChange={e => setFormData({...formData, role: e.target.value})} className="w-full bg-foreground/5 border-none rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-gold/50 font-bold appearance-none">
-                      <option value="user">Utilisateur</option>
-                      <option value="admin">Administrateur</option>
+                      <option value="user">{t('user')}</option>
+                      <option value="server">{t('server')}</option>
+                      <option value="admin">{t('admin')}</option>
                     </select>
                   </div>
                   <div>
