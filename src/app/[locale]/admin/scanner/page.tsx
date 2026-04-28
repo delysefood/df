@@ -26,18 +26,30 @@ export default function ScannerPage() {
         
         setIsScanning(true);
         try {
-          const res = await fetch(`/api/admin/orders/${decodedText}`);
-          if (res.ok) {
-            const order = await res.json();
+          const res = await fetch(`/api/admin/orders/scan`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ orderId: decodedText })
+          });
+          
+          const data = await res.json();
+          
+          if (res.ok && data.success) {
             scannedIdsRef.current.add(decodedText);
-            setScannedOrders(prev => [order, ...prev]);
+            setScannedOrders(prev => [data.order, ...prev]);
+          } else if (res.status === 400 && data.alreadyScanned) {
+            alert(`⚠️ Attention: Cette commande a déjà été scannée le ${new Date(data.scannedAt).toLocaleString()} !`);
+            // Still add it to the list but we can flag it if needed (optional)
+            // scannedIdsRef.current.add(decodedText);
+            // setScannedOrders(prev => [{...data.order, _alreadyScannedWarning: true}, ...prev]);
           } else {
-            alert('Commande introuvable.');
+            alert('Erreur: ' + (data.message || 'Commande introuvable.'));
           }
         } catch (error) {
           console.error(error);
         } finally {
-          setIsScanning(false);
+          // Add a small delay before allowing another scan to avoid rapid fire
+          setTimeout(() => setIsScanning(false), 2000);
         }
       },
       (err) => {

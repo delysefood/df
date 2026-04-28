@@ -40,7 +40,9 @@ const OrderSchema = new Schema({
     address: String,
     phone: String,
     remarks: String
-  }
+  },
+  isScanned: { type: Boolean, default: false },
+  scannedAt: { type: Date }
 }, { timestamps: true });
 
 const Order = models.Order || model('Order', OrderSchema);
