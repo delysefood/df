@@ -36,6 +36,39 @@ export default function ScannerPage() {
     }
   }, [scannedOrders]);
 
+  // Refresh statuses from backend to keep them up to date when returning to this page
+  useEffect(() => {
+    const refreshStatuses = async () => {
+      if (scannedOrders.length === 0) return;
+      try {
+        const res = await fetch('/api/admin/orders');
+        if (res.ok) {
+          const allOrders = await res.json();
+          setScannedOrders(prev => {
+            let hasChanges = false;
+            const updated = prev.map(order => {
+              const freshOrder = allOrders.find((o: any) => o._id === order._id);
+              if (freshOrder && freshOrder.status !== order.status) {
+                hasChanges = true;
+                return { ...order, status: freshOrder.status };
+              }
+              return order;
+            });
+            return hasChanges ? updated : prev;
+          });
+        }
+      } catch (err) {
+        console.error("Failed to refresh statuses", err);
+      }
+    };
+
+    refreshStatuses();
+    
+    // Optional: Auto-refresh every 15 seconds while on this page
+    const interval = setInterval(refreshStatuses, 15000);
+    return () => clearInterval(interval);
+  }, []); // Run on mount
+
   useEffect(() => {
     // Only initialize scanner on client
     const scanner = new Html5QrcodeScanner(
