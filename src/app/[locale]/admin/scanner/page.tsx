@@ -8,30 +8,30 @@ import { ScanLine, ExternalLink, Package, MapPin, Loader2, CheckCircle2 } from '
 import { Link } from '@/i18n/routing';
 
 export default function ScannerPage() {
-  const [scannedOrders, setScannedOrders] = useState<any[]>([]);
-  const [isScanningState, setIsScanningState] = useState(false);
-  const isScanningRef = useRef(false);
-  const scannedIdsRef = useRef<Set<string>>(new Set());
-
-  // Load from session storage on mount
-  useEffect(() => {
+  const [scannedOrders, setScannedOrders] = useState<any[]>(() => {
     if (typeof window !== 'undefined') {
       const saved = sessionStorage.getItem('scannedOrders');
       if (saved) {
         try {
-          const parsed = JSON.parse(saved);
-          setScannedOrders(parsed);
-          scannedIdsRef.current = new Set(parsed.map((o: any) => o._id));
-        } catch (e) {
-          console.error("Failed to parse scanned orders", e);
-        }
+          return JSON.parse(saved);
+        } catch (e) {}
       }
     }
-  }, []);
+    return [];
+  });
+  
+  const [isScanningState, setIsScanningState] = useState(false);
+  const isScanningRef = useRef(false);
+  const scannedIdsRef = useRef<Set<string>>(new Set());
+
+  // Initialize refs from loaded state on first render
+  if (scannedIdsRef.current.size === 0 && scannedOrders.length > 0) {
+    scannedIdsRef.current = new Set(scannedOrders.map(o => o._id));
+  }
 
   // Save to session storage when updated
   useEffect(() => {
-    if (scannedOrders.length > 0) {
+    if (typeof window !== 'undefined') {
       sessionStorage.setItem('scannedOrders', JSON.stringify(scannedOrders));
     }
   }, [scannedOrders]);
@@ -64,14 +64,12 @@ export default function ScannerPage() {
           
           const data = await res.json();
           
-          if (res.ok && data.success) {
+          // Silently add to list whether it was just scanned or previously scanned
+          if ((res.ok && data.success) || (res.status === 400 && data.alreadyScanned)) {
             setScannedOrders(prev => [data.order, ...prev]);
-          } else if (res.status === 400 && data.alreadyScanned) {
-            alert(`⚠️ Attention: Cette commande a déjà été scannée le ${new Date(data.scannedAt).toLocaleString()} !`);
-            // We keep it in scannedIdsRef so it doesn't spam alerts.
           } else {
-            alert('Erreur: ' + (data.message || 'Commande introuvable.'));
-            scannedIdsRef.current.delete(decodedText); // Allow re-scanning if it was an error
+            // Only alert for real errors (not found, etc.)
+            scannedIdsRef.current.delete(decodedText); // Allow re-scanning if error
           }
         } catch (error) {
           console.error(error);
@@ -80,7 +78,7 @@ export default function ScannerPage() {
           setTimeout(() => {
             isScanningRef.current = false;
             setIsScanningState(false);
-          }, 2000);
+          }, 1500);
         }
       },
       (err) => {
