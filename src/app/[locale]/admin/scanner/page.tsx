@@ -9,8 +9,32 @@ import { Link } from '@/i18n/routing';
 
 export default function ScannerPage() {
   const [scannedOrders, setScannedOrders] = useState<any[]>([]);
-  const [isScanning, setIsScanning] = useState(false); // To prevent double scans
+  const [isScanningState, setIsScanningState] = useState(false);
+  const isScanningRef = useRef(false);
   const scannedIdsRef = useRef<Set<string>>(new Set());
+
+  // Load from session storage on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const saved = sessionStorage.getItem('scannedOrders');
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          setScannedOrders(parsed);
+          scannedIdsRef.current = new Set(parsed.map((o: any) => o._id));
+        } catch (e) {
+          console.error("Failed to parse scanned orders", e);
+        }
+      }
+    }
+  }, []);
+
+  // Save to session storage when updated
+  useEffect(() => {
+    if (scannedOrders.length > 0) {
+      sessionStorage.setItem('scannedOrders', JSON.stringify(scannedOrders));
+    }
+  }, [scannedOrders]);
 
   useEffect(() => {
     // Only initialize scanner on client
@@ -22,9 +46,15 @@ export default function ScannerPage() {
 
     scanner.render(
       async (decodedText) => {
-        if (scannedIdsRef.current.has(decodedText) || isScanning) return;
+        // Prevent multiple simultaneous scans or re-scanning the same code
+        if (scannedIdsRef.current.has(decodedText) || isScanningRef.current) return;
         
-        setIsScanning(true);
+        isScanningRef.current = true;
+        setIsScanningState(true);
+        
+        // Optimistically add to set to prevent concurrent fires before fetch completes
+        scannedIdsRef.current.add(decodedText);
+        
         try {
           const res = await fetch(`/api/admin/orders/scan`, {
             method: 'POST',
@@ -35,21 +65,22 @@ export default function ScannerPage() {
           const data = await res.json();
           
           if (res.ok && data.success) {
-            scannedIdsRef.current.add(decodedText);
             setScannedOrders(prev => [data.order, ...prev]);
           } else if (res.status === 400 && data.alreadyScanned) {
             alert(`⚠️ Attention: Cette commande a déjà été scannée le ${new Date(data.scannedAt).toLocaleString()} !`);
-            // Still add it to the list but we can flag it if needed (optional)
-            // scannedIdsRef.current.add(decodedText);
-            // setScannedOrders(prev => [{...data.order, _alreadyScannedWarning: true}, ...prev]);
+            // We keep it in scannedIdsRef so it doesn't spam alerts.
           } else {
             alert('Erreur: ' + (data.message || 'Commande introuvable.'));
+            scannedIdsRef.current.delete(decodedText); // Allow re-scanning if it was an error
           }
         } catch (error) {
           console.error(error);
+          scannedIdsRef.current.delete(decodedText);
         } finally {
-          // Add a small delay before allowing another scan to avoid rapid fire
-          setTimeout(() => setIsScanning(false), 2000);
+          setTimeout(() => {
+            isScanningRef.current = false;
+            setIsScanningState(false);
+          }, 2000);
         }
       },
       (err) => {
@@ -82,7 +113,7 @@ export default function ScannerPage() {
           className="glass-card rounded-[2.5rem] p-8 border border-border h-fit"
         >
           <div className="scanner-container relative">
-            {isScanning && (
+            {isScanningState && (
               <div className="absolute inset-0 bg-black/60 z-10 rounded-2xl flex items-center justify-center">
                  <Loader2 className="animate-spin text-gold" size={48} />
               </div>
