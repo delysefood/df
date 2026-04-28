@@ -6,6 +6,7 @@ import { Link } from '@/i18n/routing';
 import { useCart } from '@/context/CartContext';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import QRCode from 'react-qr-code';
 
 type VerifyState = 'loading' | 'paid' | 'failed';
 
@@ -138,6 +139,18 @@ export default function CheckoutSuccessPage() {
               <span className="text-[10px] font-black uppercase tracking-widest">Référence commande</span>
             </div>
             <span className="font-black text-foreground tracking-widest text-sm">#{shortId}</span>
+          </motion.div>
+        )}
+
+        {orderId && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.55 }}
+            className="flex flex-col items-center justify-center p-6 bg-white rounded-2xl mx-auto w-fit"
+          >
+            <p className="text-black font-black uppercase text-xs mb-4">Code Serveur</p>
+            <QRCode value={orderId} size={150} />
           </motion.div>
         )}
 

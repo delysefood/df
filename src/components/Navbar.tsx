@@ -148,6 +148,12 @@ export default function Navbar() {
                     {link.name}
                   </Link>
                 ))}
+                
+                {session && ((session.user as any).role === 'admin' || (session.user as any).role === 'super-admin') && (
+                  <Link href="/admin" onClick={() => setIsOpen(false)} className="text-sm font-black uppercase tracking-widest text-gold hover:text-white transition-colors">
+                    {t('dashboard')}
+                  </Link>
+                )}
                 <div className="pt-6 border-t border-border flex justify-center gap-6">
                    <LanguageSwitcher />
                    <button onClick={() => {toggleTheme(); setIsOpen(false);}} className="w-12 h-12 rounded-2xl bg-foreground/5 flex items-center justify-center">

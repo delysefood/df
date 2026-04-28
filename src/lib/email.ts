@@ -109,6 +109,7 @@ export async function sendOrderEmails(data: OrderEmailData) {
   `;
 
   // 1. Email pour le Client
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${orderId}`;
   await resend.emails.send({
     from: 'Delyse Food <onboarding@resend.dev>',
     to: [process.env.RESTAURANT_MANAGER_EMAIL || 'fooddelyse@gmail.com'], 
@@ -116,7 +117,12 @@ export async function sendOrderEmails(data: OrderEmailData) {
     html: generateHtml(
       "Merci pour votre confiance", 
       `Cher ${customerName}, votre menu est dès à présent en préparation par nos chefs.`,
-      `<p style="font-size: 14px; line-height: 1.6; color: #ccc; text-align:center;">Nous préparons votre sélection gastronomique avec le plus grand soin.</p>`
+      `<div style="text-align: center; margin: 30px 0;">
+         <p style="font-size: 14px; line-height: 1.6; color: #ccc;">Veuillez présenter ce QR code à notre serveur lors de votre arrivée.</p>
+         <div style="background: white; padding: 15px; display: inline-block; border-radius: 12px; margin-top: 15px;">
+           <img src="${qrCodeUrl}" width="150" height="150" alt="QR Code Commande" />
+         </div>
+       </div>`
     ),
   });
 

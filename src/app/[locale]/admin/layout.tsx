@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Link } from "@/i18n/routing";
-import { LayoutDashboard, UtensilsCrossed, CalendarDays, ShoppingCart, Settings as SettingsIcon, LogOut, Star, Users } from 'lucide-react';
+import { LayoutDashboard, UtensilsCrossed, CalendarDays, ShoppingCart, Settings as SettingsIcon, LogOut, Star, Users, ScanLine } from 'lucide-react';
 import dbConnect from "@/lib/db/mongodb";
 import Settings from "@/models/Settings";
 import { getTranslations } from "next-intl/server";
@@ -40,6 +40,7 @@ export default async function AdminLayout({
     { name: t('orders'), href: '/admin/orders', icon: ShoppingCart },
     { name: "Clients", href: '/admin/clients', icon: Users },
     { name: "Avis", href: '/admin/reviews', icon: Star },
+    { name: "Scanner", href: '/admin/scanner', icon: ScanLine },
     { name: t('config'), href: '/admin/config', icon: SettingsIcon },
   ];
 
@@ -85,7 +86,19 @@ export default async function AdminLayout({
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 space-y-10">
+      <main className="flex-1 space-y-6 md:space-y-10 min-w-0">
+        {/* Mobile Navigation */}
+        <div className="lg:hidden flex items-center gap-3 overflow-x-auto pb-4 scrollbar-hide -mx-6 px-6">
+           {navItems.map((item) => (
+             <Link key={item.href} href={item.href as any} className="flex-shrink-0">
+                <button className="flex items-center gap-2 px-4 py-3 bg-foreground/5 rounded-xl text-[10px] font-black uppercase tracking-widest text-foreground/80 hover:text-gold hover:bg-gold/10 transition-colors">
+                  <item.icon size={16} />
+                  {item.name}
+                </button>
+             </Link>
+           ))}
+        </div>
+
         {children}
       </main>
     </div>
