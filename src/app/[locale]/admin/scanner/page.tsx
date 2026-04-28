@@ -5,9 +5,12 @@ import { Html5QrcodeScanner } from 'html5-qrcode';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { ScanLine, ExternalLink, Package, MapPin, Loader2, CheckCircle2 } from 'lucide-react';
+import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/routing';
 
 export default function ScannerPage() {
+  const t = useTranslations('Admin');
+  const locale = useLocale();
   const [scannedOrders, setScannedOrders] = useState<any[]>(() => {
     if (typeof window !== 'undefined') {
       const saved = sessionStorage.getItem('scannedOrders');
@@ -129,10 +132,10 @@ export default function ScannerPage() {
       <div>
         <h1 className="text-3xl font-black text-foreground uppercase tracking-widest flex items-center gap-3">
           <ScanLine className="text-gold" size={32} />
-          Scanner QR
+          {t('scanner')}
         </h1>
         <p className="text-foreground/60 mt-2 font-medium">
-          Scannez le code QR présenté par le client pour ajouter sa commande à la liste d'attente.
+          {t('scannerDesc')}
         </p>
       </div>
 
@@ -156,7 +159,7 @@ export default function ScannerPage() {
         {/* Scanned List Area */}
         <div className="space-y-4">
           <h2 className="text-xl font-black text-foreground tracking-tight flex items-center gap-2">
-            Commandes Scannées <span className="text-gold">({scannedOrders.length})</span>
+            {t('scannedOrders')} <span className="text-gold">({scannedOrders.length})</span>
           </h2>
           
           <div className="space-y-4">
@@ -167,12 +170,12 @@ export default function ScannerPage() {
                   className="p-8 text-center text-foreground/30 border border-dashed border-border rounded-3xl"
                 >
                   <ScanLine size={48} className="mx-auto mb-4 opacity-20" />
-                  <p className="text-xs uppercase tracking-widest font-black">Aucune commande scannée</p>
+                  <p className="text-xs uppercase tracking-widest font-black">{t('noScannedOrders')}</p>
                 </motion.div>
               ) : (
                 Object.entries(
                   scannedOrders.reduce((acc, order) => {
-                    const dateStr = new Date(order.createdAt || Date.now()).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+                    const dateStr = new Date(order.createdAt || Date.now()).toLocaleDateString(locale === 'fr' ? 'fr-FR' : locale === 'ar' ? 'ar-SA' : 'en-US', { weekday: 'long', day: 'numeric', month: 'long' });
                     if (!acc[dateStr]) acc[dateStr] = [];
                     acc[dateStr].push(order);
                     return acc;
@@ -203,10 +206,10 @@ export default function ScannerPage() {
                               </span>
                             </div>
                             <div className="flex items-center gap-3 mt-1">
-                              <p className="text-[10px] uppercase tracking-widest text-foreground/40">{order.user?.name || 'Inconnu'}</p>
+                              <p className="text-[10px] uppercase tracking-widest text-foreground/40">{order.user?.name || t('unknown')}</p>
                               <span className="w-1 h-1 rounded-full bg-foreground/20"></span>
                               <p className="text-[10px] uppercase tracking-widest text-foreground/40 font-bold">
-                                {new Date(order.createdAt || Date.now()).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+                                {new Date(order.createdAt || Date.now()).toLocaleTimeString(locale === 'fr' ? 'fr-FR' : locale === 'ar' ? 'ar-SA' : 'en-US', { hour: '2-digit', minute: '2-digit' })}
                               </p>
                             </div>
                           </div>
@@ -225,8 +228,8 @@ export default function ScannerPage() {
                                 T{order.tableNumber}
                               </div>
                               <div>
-                                <p className="text-[10px] font-black uppercase tracking-widest text-foreground">Sur Place</p>
-                                <p className="text-foreground/50 text-xs">Table {order.tableNumber}</p>
+                                <p className="text-[10px] font-black uppercase tracking-widest text-foreground">{t('dineIn')}</p>
+                                <p className="text-foreground/50 text-xs">{t('table')} {order.tableNumber}</p>
                               </div>
                             </>
                           )}
@@ -237,7 +240,7 @@ export default function ScannerPage() {
                                 <Package size={20} />
                               </div>
                               <div>
-                                <p className="text-[10px] font-black uppercase tracking-widest text-foreground">À emporter</p>
+                                <p className="text-[10px] font-black uppercase tracking-widest text-foreground">{t('takeaway')}</p>
                               </div>
                             </>
                           )}
@@ -248,7 +251,7 @@ export default function ScannerPage() {
                                 <MapPin size={20} />
                               </div>
                               <div>
-                                <p className="text-[10px] font-black uppercase tracking-widest text-foreground mb-1">Livraison</p>
+                                <p className="text-[10px] font-black uppercase tracking-widest text-foreground mb-1">{t('delivery')}</p>
                                 <p className="text-foreground/50 text-xs line-clamp-1">{order.deliveryDetails?.address}</p>
                               </div>
                             </>
@@ -257,7 +260,7 @@ export default function ScannerPage() {
                           {!order.orderType && (
                             <div className="text-foreground/40 text-[10px] uppercase font-black tracking-widest flex items-center gap-2">
                                <CheckCircle2 size={16} className="text-gold" />
-                               Mode non défini
+                               {t('modeNotDefined')}
                             </div>
                           )}
                         </div>

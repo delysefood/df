@@ -106,7 +106,7 @@ export default function Navbar() {
               <div className="flex items-center gap-4">
                  <div className="hidden md:flex flex-col items-end">
                     <span className="text-foreground">{session.user?.name}</span>
-                    {((session.user as any).role === 'admin') && (
+                    {((session.user as any).role === 'admin' || (session.user as any).role === 'server') && (
                       <Link href="/admin" className="text-gold text-[8px] hover:underline uppercase tracking-widest font-black">{t('dashboard')}</Link>
                     )}
                  </div>
@@ -149,7 +149,7 @@ export default function Navbar() {
                   </Link>
                 ))}
                 
-                {session && ((session.user as any).role === 'admin' || (session.user as any).role === 'super-admin') && (
+                {session && ((session.user as any).role === 'admin' || (session.user as any).role === 'super-admin' || (session.user as any).role === 'server') && (
                   <Link href="/admin" onClick={() => setIsOpen(false)} className="text-sm font-black uppercase tracking-widest text-gold hover:text-white transition-colors">
                     {t('dashboard')}
                   </Link>

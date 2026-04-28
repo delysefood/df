@@ -18,9 +18,11 @@ export default async function AdminLayout({
   const session = await getServerSession(authOptions);
   const t = await getTranslations({ locale, namespace: 'Admin' });
 
-  if (!session || ((session.user as any).role !== 'admin' && (session.user as any).role !== 'super-admin')) {
+  if (!session || ((session.user as any).role !== 'admin' && (session.user as any).role !== 'super-admin' && (session.user as any).role !== 'server')) {
     redirect('/');
   }
+
+  const role = (session.user as any).role;
 
   let settings = null;
   try {
@@ -32,7 +34,7 @@ export default async function AdminLayout({
 
   const dLogo = settings?.logo || "/photos/logo%20delyse_food.png";
 
-  const navItems = [
+  const allNavItems = [
     { name: t('overview'), href: '/admin', icon: LayoutDashboard },
     { name: t('menu'), href: '/admin/menu', icon: UtensilsCrossed },
     { name: 'Tables', href: '/admin/tables', icon: LayoutDashboard },
@@ -43,6 +45,10 @@ export default async function AdminLayout({
     { name: "Scanner", href: '/admin/scanner', icon: ScanLine },
     { name: t('config'), href: '/admin/config', icon: SettingsIcon },
   ];
+
+  const navItems = role === 'server' 
+    ? allNavItems.filter(item => item.href === '/admin/orders' || item.href === '/admin/scanner')
+    : allNavItems;
 
   return (
     <div className="flex min-h-screen bg-background pt-32 px-6 md:px-12 pb-12 gap-10">

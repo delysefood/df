@@ -114,6 +114,17 @@
     "orders": "الطلبات",
     "config": "الإعدادات",
     "logout": "خروج",
+    "scanner": "ماسح الرمز",
+    "server": "نادل",
+    "scannedOrders": "الطلبات الممسوحة",
+    "noScannedOrders": "لا توجد طلبات ممسوحة",
+    "scannerDesc": "امسح رمز QR الذي يقدمه العميل للتحقق من طلبه.",
+    "unknown": "غير معروف",
+    "dineIn": "في المطعم",
+    "takeaway": "للاستلام",
+    "delivery": "توصيل",
+    "table": "طاولة",
+    "modeNotDefined": "الوضع غير محدد",
     "loading": "جاري التحميل..."
   },
   "Contact": {

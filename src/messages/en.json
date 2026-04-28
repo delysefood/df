@@ -114,6 +114,17 @@
     "orders": "Orders",
     "config": "Configuration",
     "logout": "Exit",
+    "scanner": "QR Scanner",
+    "server": "Waiter",
+    "scannedOrders": "Scanned Orders",
+    "noScannedOrders": "No orders scanned",
+    "scannerDesc": "Scan the QR code presented by the customer to validate their order.",
+    "unknown": "Unknown",
+    "dineIn": "Dine-in",
+    "takeaway": "Takeaway",
+    "delivery": "Delivery",
+    "table": "Table",
+    "modeNotDefined": "Mode not defined",
     "loading": "Loading Admin..."
   },
   "Contact": {

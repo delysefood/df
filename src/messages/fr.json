@@ -114,6 +114,17 @@
     "orders": "Commandes",
     "config": "Configuration",
     "logout": "Quitter",
+    "scanner": "Scanner QR",
+    "server": "Serveur",
+    "scannedOrders": "Commandes Scannées",
+    "noScannedOrders": "Aucune commande scannée",
+    "scannerDesc": "Scannez le code QR présenté par le client pour valider sa commande.",
+    "unknown": "Inconnu",
+    "dineIn": "Sur Place",
+    "takeaway": "À emporter",
+    "delivery": "Livraison",
+    "table": "Table",
+    "modeNotDefined": "Mode non défini",
     "loading": "Chargement Admin..."
   },
   "Contact": {

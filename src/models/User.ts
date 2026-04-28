@@ -6,7 +6,7 @@ const UserSchema = new Schema({
   password: { type: String, required: true },
   role: { 
     type: String, 
-    enum: ['user', 'admin', 'super-admin'], 
+    enum: ['user', 'admin', 'super-admin', 'server'], 
     default: 'user' 
   },
   status: { 
