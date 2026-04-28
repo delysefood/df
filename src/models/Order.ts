@@ -29,6 +29,18 @@ const OrderSchema = new Schema({
   },
   stripeSessionId: { type: String },
   specialInstructions: { type: String },
+  orderType: {
+    type: String,
+    enum: ['dine_in', 'takeaway', 'delivery'],
+  },
+  tableNumber: { type: String },
+  deliveryDetails: {
+    firstName: String,
+    lastName: String,
+    address: String,
+    phone: String,
+    remarks: String
+  }
 }, { timestamps: true });
 
 const Order = models.Order || model('Order', OrderSchema);

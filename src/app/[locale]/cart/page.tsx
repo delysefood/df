@@ -13,17 +13,83 @@ export default function CartPage() {
   const t = useTranslations('Cart');
   const locale = useLocale() as 'en' | 'fr' | 'es' | 'it' | 'ar';
   const { cart, removeFromCart, updateQuantity, totalPrice, clearCart } = useCart();
-  const [loading, setLoading] = useState(false);
+  const [loadingMode, setLoadingMode] = useState<string | null>(null);
+  const [showTableModal, setShowTableModal] = useState(false);
+  const [tableNumber, setTableNumber] = useState('');
+  const [generatedOrderId, setGeneratedOrderId] = useState<string | null>(null);
   const router = useRouter();
   const { data: session } = useSession();
 
-  const handleCheckout = () => {
+  const handleCheckoutOnline = () => {
     if (!session) {
       router.push('/auth/signin');
       return;
     }
-    router.push(`/${locale}/checkout`);
+    router.push(`/${locale}/checkout`); // which goes to standard checkout
   };
+
+  const handlePayAtCounter = async () => {
+    if (!session) {
+      router.push('/auth/signin');
+      return;
+    }
+    if (!tableNumber) return;
+    
+    setLoadingMode('counter');
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: cart,
+          totalPrice,
+          mode: 'pay_at_counter',
+          tableNumber,
+        }),
+      });
+      const data = await res.json();
+      if (data.success && data.orderId) {
+        setGeneratedOrderId(data.orderId);
+        clearCart();
+        setShowTableModal(false);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingMode(null);
+    }
+  };
+
+  if (generatedOrderId) {
+    return (
+      <div className="pt-40 pb-24 px-6 md:px-12 bg-background min-h-screen flex flex-col items-center justify-center text-center">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="space-y-8 glass-card rounded-[2.5rem] p-10 max-w-md border border-border"
+        >
+          <div className="w-20 h-20 bg-emerald-500/10 rounded-[2rem] flex items-center justify-center mx-auto text-emerald-500">
+             <ShieldCheck size={40} />
+          </div>
+          <div className="space-y-2">
+            <h1 className="text-3xl font-black text-foreground tracking-tight">Commande Créée !</h1>
+            <p className="text-foreground/40 font-bold text-sm">Veuillez présenter ce QR Code au serveur pour confirmer et régler votre commande sur place.</p>
+          </div>
+          
+          <div className="flex flex-col items-center justify-center p-6 bg-white rounded-2xl mx-auto w-fit">
+            <p className="text-black font-black uppercase text-[10px] mb-3">Code Commande : #{generatedOrderId.slice(-6).toUpperCase()}</p>
+            <img src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${generatedOrderId}`} width={180} height={180} alt="QR Code" />
+          </div>
+
+          <Link href="/menu" className="inline-block pt-4">
+            <button className="bg-foreground/5 text-foreground font-black py-4 px-8 rounded-2xl hover:bg-gold hover:text-white transition-all text-[10px] uppercase tracking-widest">
+              Retour au menu
+            </button>
+          </Link>
+        </motion.div>
+      </div>
+    );
+  }
 
   if (cart.length === 0) {
     return (
@@ -147,23 +213,28 @@ export default function CartPage() {
                  </div>
               </div>
 
-              <button 
-                onClick={handleCheckout}
-                disabled={loading}
-                className="w-full bg-gold text-white font-black py-5 rounded-2xl flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-gold/20 disabled:opacity-50"
-              >
-                {loading ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : (
-                  <>
-                    <span className="uppercase tracking-[0.2em] text-[10px]">{t('checkoutBtn')}</span>
-                    <ArrowRight size={18} />
-                  </>
-                )}
-              </button>
-
-              <div className="flex items-center justify-center gap-2 text-foreground/20">
-                 <ShieldCheck size={14} />
-                 <span className="text-[9px] font-black uppercase tracking-widest text-center">Paiement 100% Sécurisé</span>
+              <div className="space-y-3 pt-4">
+                <button 
+                  onClick={() => {
+                    if (!session) { router.push('/auth/signin'); return; }
+                    setShowTableModal(true);
+                  }}
+                  disabled={loadingMode !== null}
+                  className="w-full bg-foreground/5 text-foreground border border-border font-black py-5 rounded-2xl flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-xs disabled:opacity-50"
+                >
+                  Commander (Sur Place)
+                </button>
+                
+                <button 
+                  onClick={handleCheckoutOnline}
+                  disabled={loadingMode !== null}
+                  className="w-full bg-gold text-white font-black py-5 rounded-2xl flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-gold/20 uppercase tracking-widest text-xs disabled:opacity-50"
+                >
+                  <ShieldCheck size={18} />
+                  Payer en Ligne
+                </button>
               </div>
+
             </div>
 
             <Link href="/menu" className="block text-center text-[10px] font-black uppercase tracking-widest text-foreground/30 hover:text-gold transition-colors">
@@ -172,6 +243,54 @@ export default function CartPage() {
           </div>
         </div>
       </div>
+
+      {/* Table Selection Modal for Pay At Counter */}
+      <AnimatePresence>
+        {showTableModal && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-background/80 backdrop-blur-md"
+              onClick={() => setShowTableModal(false)}
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="relative z-10 w-full max-w-md glass-card rounded-[2.5rem] p-8 border border-border shadow-2xl"
+            >
+              <h2 className="text-2xl font-black text-foreground tracking-tight mb-2">Votre Table</h2>
+              <p className="text-sm text-foreground/50 mb-6">Veuillez entrer le numéro de votre table pour que nous puissions vous servir.</p>
+              
+              <input 
+                type="text" 
+                placeholder="Ex: 12"
+                value={tableNumber}
+                onChange={(e) => setTableNumber(e.target.value)}
+                className="w-full bg-background border border-border rounded-xl px-4 py-4 text-foreground mb-6 focus:border-gold outline-none transition-colors"
+                autoFocus
+              />
+
+              <div className="flex gap-3">
+                <button 
+                  onClick={() => setShowTableModal(false)}
+                  className="flex-1 bg-foreground/5 text-foreground py-4 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-foreground/10 transition-colors"
+                >
+                  Annuler
+                </button>
+                <button 
+                  onClick={handlePayAtCounter}
+                  disabled={!tableNumber || loadingMode === 'counter'}
+                  className="flex-1 bg-gold text-white py-4 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-gold/90 transition-colors disabled:opacity-50 flex justify-center items-center"
+                >
+                  {loadingMode === 'counter' ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : "Confirmer"}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
     </div>
   );
 }

@@ -19,6 +19,14 @@ export default function CheckoutSuccessPage() {
 
   const [state, setState] = useState<VerifyState>('loading');
   const [shortId, setShortId] = useState('');
+  
+  // New state for preferences
+  const [prefState, setPrefState] = useState<'choosing' | 'submitting' | 'done'>('choosing');
+  const [orderType, setOrderType] = useState<'dine_in' | 'takeaway' | 'delivery' | null>(null);
+  const [tableNumber, setTableNumber] = useState('');
+  const [deliveryDetails, setDeliveryDetails] = useState({
+    firstName: '', lastName: '', address: '', phone: '', remarks: ''
+  });
 
   useEffect(() => {
     if (!orderId || (!sessionId && !paymentIntent)) {
@@ -26,7 +34,7 @@ export default function CheckoutSuccessPage() {
       return;
     }
 
-    setShortId(orderId.slice(-8).toUpperCase());
+    setShortId(orderId.slice(-6).toUpperCase());
 
     // Verify payment server-side
     const verifyUrl = sessionId 
@@ -45,6 +53,26 @@ export default function CheckoutSuccessPage() {
       })
       .catch(() => setState('failed'));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const submitPreferences = async () => {
+    setPrefState('submitting');
+    try {
+      const res = await fetch(`/api/orders/${orderId}/preferences`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderType,
+          tableNumber: orderType === 'dine_in' ? tableNumber : undefined,
+          deliveryDetails: orderType === 'delivery' ? deliveryDetails : undefined
+        }),
+      });
+      if (res.ok) setPrefState('done');
+      else setPrefState('choosing'); // handle error gracefully
+    } catch (e) {
+      console.error(e);
+      setPrefState('choosing');
+    }
+  };
 
   /* ───── Loading ───── */
   if (state === 'loading') {
@@ -123,53 +151,82 @@ export default function CheckoutSuccessPage() {
             Paiement Réussi !
           </h1>
           <p className="text-foreground/60 font-medium leading-relaxed">
-            Votre paiement a été confirmé. Notre équipe prépare votre commande avec soin.
+            Votre paiement a été confirmé.
           </p>
         </motion.div>
 
-        {shortId && (
+        {prefState !== 'done' ? (
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="bg-foreground/5 border border-border rounded-2xl px-6 py-4 flex items-center justify-between"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            className="space-y-6 text-left border-t border-border pt-6"
           >
-            <div className="flex items-center gap-3 text-foreground/50">
-              <ClipboardList size={18} />
-              <span className="text-[10px] font-black uppercase tracking-widest">Référence commande</span>
+            <h2 className="text-xl font-black text-foreground text-center">Comment souhaitez-vous recevoir votre commande ?</h2>
+            
+            <div className="grid grid-cols-3 gap-3">
+              <button onClick={() => setOrderType('dine_in')} className={`py-3 px-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${orderType === 'dine_in' ? 'border-gold bg-gold/10 text-gold' : 'border-border bg-foreground/5 text-foreground/50'}`}>Sur Place</button>
+              <button onClick={() => setOrderType('takeaway')} className={`py-3 px-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${orderType === 'takeaway' ? 'border-gold bg-gold/10 text-gold' : 'border-border bg-foreground/5 text-foreground/50'}`}>À emporter</button>
+              <button onClick={() => setOrderType('delivery')} className={`py-3 px-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${orderType === 'delivery' ? 'border-gold bg-gold/10 text-gold' : 'border-border bg-foreground/5 text-foreground/50'}`}>Livraison</button>
             </div>
-            <span className="font-black text-foreground tracking-widest text-sm">#{shortId}</span>
-          </motion.div>
-        )}
 
-        {orderId && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.55 }}
-            className="flex flex-col items-center justify-center p-6 bg-white rounded-2xl mx-auto w-fit"
-          >
-            <p className="text-black font-black uppercase text-xs mb-4">Code Serveur</p>
-            <QRCode value={orderId} size={150} />
-          </motion.div>
-        )}
+            {orderType === 'dine_in' && (
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-foreground uppercase tracking-widest ml-1">Numéro de table</label>
+                <input type="text" placeholder="Ex: 12" value={tableNumber} onChange={e => setTableNumber(e.target.value)} className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm focus:border-gold outline-none" />
+              </div>
+            )}
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          className="flex flex-col gap-4 pt-2"
-        >
-          <Link href="/" className="block">
-            <button className="w-full bg-gold text-white font-black py-4 px-10 rounded-2xl flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-gold/20 uppercase tracking-widest text-xs">
-              <span>Retour à l&apos;accueil</span>
-              <ArrowRight size={18} />
+            {orderType === 'delivery' && (
+              <div className="space-y-3">
+                <div className="grid grid-cols-2 gap-3">
+                  <input type="text" placeholder="Prénom" value={deliveryDetails.firstName} onChange={e => setDeliveryDetails({...deliveryDetails, firstName: e.target.value})} className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm focus:border-gold outline-none" />
+                  <input type="text" placeholder="Nom" value={deliveryDetails.lastName} onChange={e => setDeliveryDetails({...deliveryDetails, lastName: e.target.value})} className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm focus:border-gold outline-none" />
+                </div>
+                <input type="text" placeholder="Adresse complète" value={deliveryDetails.address} onChange={e => setDeliveryDetails({...deliveryDetails, address: e.target.value})} className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm focus:border-gold outline-none" />
+                <input type="tel" placeholder="Numéro de téléphone" value={deliveryDetails.phone} onChange={e => setDeliveryDetails({...deliveryDetails, phone: e.target.value})} className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm focus:border-gold outline-none" />
+                <textarea placeholder="Remarque (facultatif)" value={deliveryDetails.remarks} onChange={e => setDeliveryDetails({...deliveryDetails, remarks: e.target.value})} className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm focus:border-gold outline-none min-h-[80px]" />
+              </div>
+            )}
+
+            <button 
+              onClick={submitPreferences}
+              disabled={!orderType || prefState === 'submitting' || (orderType === 'dine_in' && !tableNumber) || (orderType === 'delivery' && (!deliveryDetails.firstName || !deliveryDetails.address || !deliveryDetails.phone))}
+              className="w-full bg-gold text-white font-black py-4 rounded-2xl uppercase tracking-widest text-xs hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              {prefState === 'submitting' ? <Loader2 size={16} className="animate-spin" /> : "Confirmer"}
             </button>
-          </Link>
-          <Link href="/menu" className="block text-[10px] font-black uppercase tracking-widest text-foreground/30 hover:text-gold transition-colors">
-            Commander à nouveau
-          </Link>
-        </motion.div>
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            className="space-y-6"
+          >
+            {shortId && (
+              <div className="bg-foreground/5 border border-border rounded-2xl px-6 py-4 flex items-center justify-between">
+                <div className="flex items-center gap-3 text-foreground/50">
+                  <ClipboardList size={18} />
+                  <span className="text-[10px] font-black uppercase tracking-widest">Référence</span>
+                </div>
+                <span className="font-black text-foreground tracking-widest text-sm">#{shortId}</span>
+              </div>
+            )}
+
+            {orderId && (
+              <div className="flex flex-col items-center justify-center p-6 bg-white rounded-2xl mx-auto w-fit">
+                <p className="text-black font-black uppercase text-[10px] mb-4">Code Serveur</p>
+                <QRCode value={orderId} size={150} />
+              </div>
+            )}
+
+            <div className="flex flex-col gap-4 pt-2">
+              <Link href="/" className="block">
+                <button className="w-full bg-gold text-white font-black py-4 px-10 rounded-2xl flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-gold/20 uppercase tracking-widest text-xs">
+                  <span>Retour à l&apos;accueil</span>
+                  <ArrowRight size={18} />
+                </button>
+              </Link>
+            </div>
+          </motion.div>
+        )}
       </motion.div>
     </div>
   );

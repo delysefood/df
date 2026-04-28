@@ -17,7 +17,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Vous devez être connecté pour passer une commande." }, { status: 401 });
     }
 
-    const { items, totalPrice, specialInstructions, successUrl, cancelUrl } = await req.json();
+    const { items, totalPrice, specialInstructions, successUrl, cancelUrl, mode, tableNumber } = await req.json();
 
     if (!items || items.length === 0) {
       return NextResponse.json({ message: "Le panier est vide." }, { status: 400 });
@@ -37,7 +37,14 @@ export async function POST(req: Request) {
       })),
       totalPrice,
       specialInstructions,
+      orderType: mode === 'pay_at_counter' ? 'dine_in' : 'takeaway',
+      tableNumber: tableNumber || null,
+      status: mode === 'pay_at_counter' ? 'preparing' : 'pending',
     });
+
+    if (mode === 'pay_at_counter') {
+      return NextResponse.json({ success: true, orderId: order._id }, { status: 200 });
+    }
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 

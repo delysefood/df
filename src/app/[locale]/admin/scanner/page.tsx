@@ -1,14 +1,16 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import { Loader2, ScanLine } from 'lucide-react';
+import { ScanLine, ExternalLink, Package, MapPin, Loader2, CheckCircle2 } from 'lucide-react';
+import { Link } from '@/i18n/routing';
 
 export default function ScannerPage() {
-  const [scanResult, setScanResult] = useState<string | null>(null);
-  const router = useRouter();
+  const [scannedOrders, setScannedOrders] = useState<any[]>([]);
+  const [isScanning, setIsScanning] = useState(false); // To prevent double scans
+  const scannedIdsRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
     // Only initialize scanner on client
@@ -19,10 +21,24 @@ export default function ScannerPage() {
     );
 
     scanner.render(
-      (decodedText) => {
-        setScanResult(decodedText);
-        scanner.clear();
-        router.push(`/admin/orders/${decodedText}`);
+      async (decodedText) => {
+        if (scannedIdsRef.current.has(decodedText) || isScanning) return;
+        
+        setIsScanning(true);
+        try {
+          const res = await fetch(`/api/admin/orders/${decodedText}`);
+          if (res.ok) {
+            const order = await res.json();
+            scannedIdsRef.current.add(decodedText);
+            setScannedOrders(prev => [order, ...prev]);
+          } else {
+            alert('Commande introuvable.');
+          }
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setIsScanning(false);
+        }
       },
       (err) => {
         // Ignore scan errors, happens when no QR found in frame
@@ -32,39 +48,124 @@ export default function ScannerPage() {
     return () => {
       scanner.clear().catch((error) => console.error('Failed to clear scanner.', error));
     };
-  }, [router]);
+  }, []);
 
   return (
-    <div className="max-w-2xl mx-auto space-y-8">
+    <div className="max-w-4xl mx-auto space-y-8">
       <div>
         <h1 className="text-3xl font-black text-foreground uppercase tracking-widest flex items-center gap-3">
           <ScanLine className="text-gold" size={32} />
           Scanner QR
         </h1>
         <p className="text-foreground/60 mt-2 font-medium">
-          Scannez le code QR présenté par le client pour accéder directement à sa commande.
+          Scannez le code QR présenté par le client pour ajouter sa commande à la liste d'attente.
         </p>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="glass-card rounded-[2.5rem] p-8 border border-border"
-      >
-        {scanResult ? (
-          <div className="text-center py-12 space-y-4">
-            <Loader2 className="animate-spin text-gold mx-auto" size={48} />
-            <p className="text-foreground/80 font-black uppercase tracking-widest text-sm">
-              Redirection vers la commande...
-            </p>
-            <p className="text-foreground/50 text-xs">{scanResult}</p>
-          </div>
-        ) : (
-          <div className="scanner-container">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Scanner Area */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="glass-card rounded-[2.5rem] p-8 border border-border h-fit"
+        >
+          <div className="scanner-container relative">
+            {isScanning && (
+              <div className="absolute inset-0 bg-black/60 z-10 rounded-2xl flex items-center justify-center">
+                 <Loader2 className="animate-spin text-gold" size={48} />
+              </div>
+            )}
             <div id="qr-reader" className="w-full overflow-hidden rounded-2xl bg-black/50 border border-border min-h-[300px]"></div>
           </div>
-        )}
-      </motion.div>
+        </motion.div>
+
+        {/* Scanned List Area */}
+        <div className="space-y-4">
+          <h2 className="text-xl font-black text-foreground tracking-tight flex items-center gap-2">
+            Commandes Scannées <span className="text-gold">({scannedOrders.length})</span>
+          </h2>
+          
+          <div className="space-y-4">
+            <AnimatePresence>
+              {scannedOrders.length === 0 ? (
+                <motion.div 
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                  className="p-8 text-center text-foreground/30 border border-dashed border-border rounded-3xl"
+                >
+                  <ScanLine size={48} className="mx-auto mb-4 opacity-20" />
+                  <p className="text-xs uppercase tracking-widest font-black">Aucune commande scannée</p>
+                </motion.div>
+              ) : (
+                scannedOrders.map((order) => (
+                  <motion.div 
+                    key={order._id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="glass-card p-6 rounded-3xl border border-border relative overflow-hidden"
+                  >
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <p className="text-2xl font-black text-foreground">#{order._id.slice(-6).toUpperCase()}</p>
+                        <p className="text-[10px] uppercase tracking-widest text-foreground/40">{order.user?.name || 'Inconnu'}</p>
+                      </div>
+                      <Link href={`/admin/orders/${order._id}`}>
+                        <button className="w-10 h-10 rounded-full bg-foreground/5 flex items-center justify-center text-gold hover:bg-gold hover:text-white transition-all">
+                          <ExternalLink size={16} />
+                        </button>
+                      </Link>
+                    </div>
+
+                    {/* Order Type Info */}
+                    <div className="bg-foreground/5 rounded-2xl p-4 flex items-center gap-4">
+                      {order.orderType === 'dine_in' && (
+                        <>
+                          <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center font-black">
+                            T{order.tableNumber}
+                          </div>
+                          <div>
+                            <p className="text-[10px] font-black uppercase tracking-widest text-foreground">Sur Place</p>
+                            <p className="text-foreground/50 text-xs">Table {order.tableNumber}</p>
+                          </div>
+                        </>
+                      )}
+                      
+                      {order.orderType === 'takeaway' && (
+                        <>
+                          <div className="w-10 h-10 rounded-xl bg-orange-500/10 text-orange-500 flex items-center justify-center">
+                            <Package size={20} />
+                          </div>
+                          <div>
+                            <p className="text-[10px] font-black uppercase tracking-widest text-foreground">À emporter</p>
+                          </div>
+                        </>
+                      )}
+
+                      {order.orderType === 'delivery' && (
+                        <>
+                          <div className="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center">
+                            <MapPin size={20} />
+                          </div>
+                          <div>
+                            <p className="text-[10px] font-black uppercase tracking-widest text-foreground mb-1">Livraison</p>
+                            <p className="text-foreground/50 text-xs line-clamp-1">{order.deliveryDetails?.address}</p>
+                          </div>
+                        </>
+                      )}
+
+                      {!order.orderType && (
+                        <div className="text-foreground/40 text-[10px] uppercase font-black tracking-widest flex items-center gap-2">
+                           <CheckCircle2 size={16} className="text-gold" />
+                           Mode non défini
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
+                ))
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+      </div>
 
       {/* Basic styles to override the ugly default html5-qrcode styles */}
       <style dangerouslySetInnerHTML={{__html: `

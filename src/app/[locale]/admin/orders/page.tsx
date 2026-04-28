@@ -128,6 +128,24 @@ export default function AdminOrdersPage() {
 
                 <div className="flex-1 max-w-md">
                    <div className="space-y-4">
+                      {order.orderType && (
+                        <div className="mb-4">
+                           <span className="text-[9px] font-black text-gold uppercase tracking-[0.2em] border-b border-gold/10 pb-2">Mode de Réception</span>
+                           <div className="mt-2 text-sm text-foreground font-medium">
+                              {order.orderType === 'dine_in' && <span>Sur place (Table: {order.tableNumber})</span>}
+                              {order.orderType === 'takeaway' && <span>À emporter</span>}
+                              {order.orderType === 'delivery' && (
+                                <div className="text-xs space-y-1">
+                                  <span className="font-bold text-blue-400">Livraison</span>
+                                  <p>{order.deliveryDetails?.firstName} {order.deliveryDetails?.lastName}</p>
+                                  <p>{order.deliveryDetails?.address}</p>
+                                  <p>{order.deliveryDetails?.phone}</p>
+                                  {order.deliveryDetails?.remarks && <p className="text-foreground/50 italic">"{order.deliveryDetails.remarks}"</p>}
+                                </div>
+                              )}
+                           </div>
+                        </div>
+                      )}
                       <p className="text-[9px] font-black text-gold uppercase tracking-[0.2em] border-b border-gold/10 pb-2">Détails de la Préparation</p>
                       <div className="space-y-4">
                          {order.items.map((item: any, idx: number) => (

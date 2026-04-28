@@ -105,6 +105,51 @@ export default function SingleOrderPage() {
           </div>
         </div>
 
+        {order.orderType && (
+          <div>
+            <p className="text-xs font-black text-gold uppercase tracking-[0.2em] mb-4">Mode de Réception</p>
+            <div className="bg-foreground/5 rounded-2xl p-6">
+              {order.orderType === 'dine_in' && (
+                <div className="flex items-center gap-3">
+                  <span className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center font-black">
+                    T{order.tableNumber}
+                  </span>
+                  <div>
+                    <p className="text-sm font-black uppercase tracking-widest text-foreground">Sur Place</p>
+                    <p className="text-foreground/50 text-xs">Table {order.tableNumber}</p>
+                  </div>
+                </div>
+              )}
+              {order.orderType === 'takeaway' && (
+                <div className="flex items-center gap-3">
+                  <span className="w-10 h-10 rounded-xl bg-orange-500/10 text-orange-500 flex items-center justify-center">
+                    <Package size={20} />
+                  </span>
+                  <div>
+                    <p className="text-sm font-black uppercase tracking-widest text-foreground">À emporter</p>
+                  </div>
+                </div>
+              )}
+              {order.orderType === 'delivery' && (
+                <div className="flex items-center gap-3">
+                  <span className="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center">
+                    <MapPin size={20} />
+                  </span>
+                  <div>
+                    <p className="text-sm font-black uppercase tracking-widest text-foreground mb-1">Livraison</p>
+                    <p className="text-foreground/80 text-sm font-medium">{order.deliveryDetails?.firstName} {order.deliveryDetails?.lastName}</p>
+                    <p className="text-foreground/60 text-xs">{order.deliveryDetails?.address}</p>
+                    <p className="text-foreground/60 text-xs">{order.deliveryDetails?.phone}</p>
+                    {order.deliveryDetails?.remarks && (
+                      <p className="text-foreground/50 text-xs italic mt-2">"{order.deliveryDetails.remarks}"</p>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         <div>
            <p className="text-xs font-black text-gold uppercase tracking-[0.2em] mb-6">Contenu de la Commande</p>
            <div className="space-y-6">
