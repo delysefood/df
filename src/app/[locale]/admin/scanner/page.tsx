@@ -49,7 +49,11 @@ export default function ScannerPage() {
           const allOrders = await res.json();
           setScannedOrders(prev => {
             let hasChanges = false;
-            const updated = prev.map(order => {
+            // Filter out orders that no longer exist
+            const filtered = prev.filter(order => allOrders.some((o: any) => o._id === order._id));
+            if (filtered.length !== prev.length) hasChanges = true;
+
+            const updated = filtered.map(order => {
               const freshOrder = allOrders.find((o: any) => o._id === order._id);
               if (freshOrder && freshOrder.status !== order.status) {
                 hasChanges = true;
@@ -198,8 +202,10 @@ export default function ScannerPage() {
                               <p className="text-2xl font-black text-foreground">#{order._id.slice(-6).toUpperCase()}</p>
                               <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
                                 order.status === 'delivered' ? 'bg-emerald-500/10 text-emerald-500' : 
+                                order.status === 'ready' ? 'bg-emerald-500/10 text-emerald-500' : 
                                 order.status === 'pending' ? 'bg-amber-500/10 text-amber-500 animate-pulse' : 
                                 order.status === 'preparing' ? 'bg-blue-500/10 text-blue-500' : 
+                                order.status === 'cancelled' ? 'bg-red-500/10 text-red-500 opacity-50' :
                                 'bg-red-500/10 text-red-500'
                               }`}>
                                 {order.status}
