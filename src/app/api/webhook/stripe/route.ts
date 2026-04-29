@@ -1,11 +1,9 @@
 import { NextResponse } from "next/server";
-import Stripe from "stripe";
+import { stripe } from "@/lib/stripe";
+import type Stripe from "stripe";
 import dbConnect from "@/lib/db/mongodb";
 import Order from "@/models/Order";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: "2023-10-16" as any,
-});
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET as string;
 
