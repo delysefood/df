@@ -1,13 +1,10 @@
 import { NextResponse } from "next/server";
-import Stripe from "stripe";
+import { stripe } from "@/lib/stripe";
 import dbConnect from "@/lib/db/mongodb";
 import Order from "@/models/Order";
 import User from "@/models/User";
 import { sendOrderEmails } from "@/lib/email";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: "2023-10-16" as any,
-});
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
