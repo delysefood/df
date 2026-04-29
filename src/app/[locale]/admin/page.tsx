@@ -10,7 +10,8 @@ import {
   Activity,
   ArrowUpRight,
   Plus,
-  Loader2
+  Loader2,
+  Scan
 } from "lucide-react";
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
@@ -22,6 +23,10 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     fetchStats();
+    
+    // Auto-refresh stats every 30 seconds to keep dashboard in sync
+    const interval = setInterval(fetchStats, 30000);
+    return () => clearInterval(interval);
   }, []);
 
   const fetchStats = async () => {
@@ -94,6 +99,12 @@ export default function AdminDashboard() {
         </div>
         <div className="flex gap-4">
            <button 
+             onClick={() => router.push('./admin/scanner')}
+             className="bg-foreground/5 text-foreground font-black px-8 py-4 rounded-2xl flex items-center gap-3 hover:bg-foreground/10 transition-all text-[10px] uppercase tracking-widest border border-border"
+           >
+              <Scan size={18} className="text-gold" /> Scanner QR
+           </button>
+           <button 
              onClick={() => router.push('./admin/menu')}
              className="bg-gold text-white font-black px-8 py-4 rounded-2xl flex items-center gap-3 hover:scale-105 active:scale-95 transition-all shadow-lg shadow-gold/20 text-[10px] uppercase tracking-widest"
            >
@@ -156,10 +167,17 @@ export default function AdminDashboard() {
                        {new Date(order.createdAt).toLocaleString()} • {order.totalPrice}€
                     </p>
                   </div>
-                  <div className={`text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-xl ${
-                    order.status === 'delivered' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-gold/10 text-gold'
-                  }`}>
-                    {order.status}
+                  <div className="flex items-center gap-3">
+                    <div className={`text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-xl ${
+                      order.status === 'delivered' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-gold/10 text-gold'
+                    }`}>
+                      {order.status}
+                    </div>
+                    {order.isScanned && (
+                      <div className="bg-emerald-500/20 text-emerald-500 p-2 rounded-lg" title="Scanné">
+                        <Scan size={14} />
+                      </div>
+                    )}
                   </div>
                 </div>
               ))

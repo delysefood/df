@@ -128,7 +128,8 @@
     "role": "Role",
     "user": "User",
     "admin": "Administrator",
-    "loading": "Loading Admin..."
+    "loading": "Loading Admin...",
+    "backToDashboard": "Back to Dashboard"
   },
   "Contact": {
     "pageSubtitle": "Contact Us",

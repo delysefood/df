@@ -128,7 +128,8 @@
     "role": "Rôle",
     "user": "Utilisateur",
     "admin": "Administrateur",
-    "loading": "Chargement Admin..."
+    "loading": "Chargement Admin...",
+    "backToDashboard": "Retour au Tableau de Bord"
   },
   "Contact": {
     "pageSubtitle": "Contactez-nous",

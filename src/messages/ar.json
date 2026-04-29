@@ -128,7 +128,8 @@
     "role": "الدور",
     "user": "مستخدم",
     "admin": "مدير",
-    "loading": "جاري التحميل..."
+    "loading": "جاري التحميل...",
+    "backToDashboard": "العودة إلى لوحة التحكم"
   },
   "Contact": {
     "pageSubtitle": "اتصل بنا",

@@ -133,14 +133,21 @@ export default function ScannerPage() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
-      <div>
-        <h1 className="text-3xl font-black text-foreground uppercase tracking-widest flex items-center gap-3">
-          <ScanLine className="text-gold" size={32} />
-          {t('scanner')}
-        </h1>
-        <p className="text-foreground/60 mt-2 font-medium">
-          {t('scannerDesc')}
-        </p>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+          <h1 className="text-3xl font-black text-foreground uppercase tracking-widest flex items-center gap-3">
+            <ScanLine className="text-gold" size={32} />
+            {t('scanner')}
+          </h1>
+          <p className="text-foreground/60 mt-2 font-medium">
+            {t('scannerDesc')}
+          </p>
+        </div>
+        <Link href="/admin">
+          <button className="text-[10px] font-black uppercase tracking-[0.2em] text-gold hover:text-white bg-gold/10 hover:bg-gold px-6 py-3 rounded-xl transition-all border border-gold/20 flex items-center gap-2">
+             ← {t('backToDashboard')}
+          </button>
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
